@@ -9,8 +9,11 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class HomeViewController: UICollectionViewController {
-
+class HomeViewController: UICollectionViewController , UICollectionViewDelegateFlowLayout {
+    
+    let sports : [Sport] = [Sport(img: "f", name: "Football"), Sport(img: "c", name: "Cricket"),
+                            Sport(img: "b", name: "Basketball"),
+                            Sport(img: "t", name: "Tennis")]
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,10 +21,16 @@ class HomeViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
+        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.sectionInset = UIEdgeInsets(top: 64, left: 16, bottom: 0, right: 16)
+            layout.minimumInteritemSpacing = 8 // spacing between the two cells
+            layout.minimumLineSpacing = 32 // spacing between rows
+        }
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
     }
+    
 
     /*
     // MARK: - Navigation
@@ -34,24 +43,29 @@ class HomeViewController: UICollectionViewController {
     */
 
     // MARK: UICollectionViewDataSource
-
+  
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 0
+        return 4
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "homeCell", for: indexPath) as! CollectionViewCell
+        cell.myTitle.text =  sports[indexPath.item].name
+        cell.img.image = UIImage(named: sports[indexPath.item].img)
     
         // Configure the cell
     
         return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (collectionView.frame.width)/2-30, height: 260)
     }
 
     // MARK: UICollectionViewDelegate
