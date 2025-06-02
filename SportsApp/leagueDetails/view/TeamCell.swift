@@ -7,56 +7,6 @@
 
 import UIKit
 
-/*class TeamCell: UICollectionViewCell {
-    
-    let teamImageView = UIImageView()
-    let teamNameLabel = UILabel()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-        setupConstraints()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func setupViews() {
-        [teamImageView, teamNameLabel].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            contentView.addSubview($0)
-        }
-
-        teamImageView.contentMode = .scaleAspectFill
-        teamImageView.layer.cornerRadius = 35
-        teamImageView.clipsToBounds = true
-
-        teamNameLabel.font = .systemFont(ofSize: 14)
-        teamNameLabel.textAlignment = .center
-        teamNameLabel.numberOfLines = 2
-    }
-
-    func setupConstraints() {
-        NSLayoutConstraint.activate([
-            teamImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            teamImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            teamImageView.widthAnchor.constraint(equalToConstant: 70),
-            teamImageView.heightAnchor.constraint(equalToConstant: 70),
-            
-            teamNameLabel.topAnchor.constraint(equalTo: teamImageView.bottomAnchor, constant: 6),
-            teamNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
-            teamNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
-            teamNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6)
-        ])
-    }
-    
-    func configure(with title: String) {
-       teamImageView.image = UIImage(systemName: "f")
-        teamNameLabel.text = title
-    
-    }
-}*/
 
 class TeamCell: UICollectionViewCell {
     static let reuseIdentifier = "TeamCell"
@@ -123,10 +73,14 @@ class TeamCell: UICollectionViewCell {
         ])
     }
     
-//    func configure(with team: Team) {
+    // use this
+    
+//    func configure(with team: Team) {    // replace with the real team model 
 //        teamNameLabel.text = team.name
-//        // teamLogo.image = UIImage(named: team.logo) or load from URL
+//         teamLogo.image = UIImage(named: team.logo)  // replace with kingFisher pod
 //    }
+    
+    // ay 7aga 3ashan agarb
     
     func configure(with title: String) {
         teamLogo.image = UIImage(named: "ff")

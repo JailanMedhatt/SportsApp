@@ -5,10 +5,9 @@ struct Match {
     let date: String
     let time: String
     let score: String?
-    let isUpcoming: Bool
 }
 
 struct Team {
     let name: String
-    let logo: String // or UIImage
+    let logo: String
 }
