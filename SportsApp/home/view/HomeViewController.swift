@@ -93,7 +93,11 @@ class HomeViewController: UICollectionViewController , UICollectionViewDelegateF
         return CGSize(width: (collectionView.frame.width)/2-20, height: 280)
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "teamDetails") as? TeamViewController {
+        let sb = UIStoryboard(name: "Core", bundle: nil)
+    
+        if let vc = sb.instantiateViewController(withIdentifier: "Leagues") as? LeagueTableViewController {
+            let presenter = LeaguePresenter(ref:  vc, sport: sports[indexPath.item].name.lowercased())
+            vc.presenter = presenter
             navigationController?.pushViewController(vc, animated: true)
         }
         

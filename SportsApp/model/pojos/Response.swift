@@ -6,3 +6,7 @@
 //
 
 import Foundation
+class Response : Decodable{
+    var success: Int?
+    var result : [LeagueDataModel]?
+}

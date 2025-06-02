@@ -6,14 +6,23 @@
 //
 
 import UIKit
+import Kingfisher
 
-class LeagueTableViewController: UITableViewController {
-
+class LeagueTableViewController: UITableViewController, LeagueProtocol {
+    var indicator : UIActivityIndicatorView?
+    var leagues : [LeagueDataModel] = []
+    var presenter : LeaguePresenter!
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.fetchLeagues()
+        indicator = UIActivityIndicatorView(style: .large)
+        indicator?.center = self.view.center
+        self.view.addSubview(indicator!)
+        indicator?.startAnimating()
         tableView.separatorStyle = .none
         let nib = UINib(nibName: "LeagueTableViewCell", bundle: nil)  /// bundle  /// name of the cell class
         tableView.register(nib, forCellReuseIdentifier: "LeagueCell")
+      //  NetworkManager.fetchLeagues(sport: "football")
        // self.title = "Leagues"
         
 //        let titleLabel = UILabel()
@@ -35,7 +44,13 @@ class LeagueTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
+    func getLeagues(leagues: [LeagueDataModel]?) {
+        indicator?.stopAnimating()
+        self.leagues = leagues ?? []
+        print(leagues?.count)
+        self.tableView.reloadData()
+        
+    }
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -48,12 +63,15 @@ class LeagueTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 5
+        return leagues.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LeagueCell", for: indexPath)
+        as! LeagueTableViewCell
+        cell.leagueImage.kf.setImage(with: URL(string: leagues[indexPath.item].league_logo ?? "")  ,placeholder: UIImage(named: "f"))
+        cell.leagueLabel.text = leagues[indexPath.row].league_name
 
         // Configure the cell...
 

@@ -11,7 +11,8 @@ class LeagueTableViewCell: UITableViewCell {
 
     @IBOutlet weak var heartButton: UIButton!
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var leagueLabel: NSLayoutConstraint!
+
+    @IBOutlet weak var leagueLabel: UILabel!
     @IBOutlet weak var leagueImage: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()

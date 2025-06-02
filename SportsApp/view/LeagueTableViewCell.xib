@@ -68,7 +68,7 @@
                 <outlet property="containerView" destination="hqb-Tj-K2D" id="YSA-O6-fH4"/>
                 <outlet property="heartButton" destination="jWf-0Z-DGv" id="0qj-jn-NCJ"/>
                 <outlet property="leagueImage" destination="HNh-lg-4e1" id="DIi-OG-Cm5"/>
-                <outlet property="leagueLabel" destination="yfV-4p-dt2" id="wLX-xD-1ji"/>
+                <outlet property="leagueLabel" destination="yfV-4p-dt2" id="4bp-RT-NM9"/>
             </connections>
             <point key="canvasLocation" x="62.595419847328245" y="6.3380281690140849"/>
         </tableViewCell>
