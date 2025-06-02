@@ -64,13 +64,13 @@ class TeamCell: UICollectionViewCell {
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.cornerRadius = 12
-        view.layer.borderWidth = 1
-       // view.layer.borderColor = UIColor(hex: "#379C67").cgColor
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.1
-        view.layer.shadowOffset = CGSize(width: 0, height: 2)
-        view.layer.shadowRadius = 4
+       // view.layer.cornerRadius = 12
+     //  view.layer.borderWidth = 1
+     //  view.layer.borderColor = UIColor(hex: "#379C67").cgColor
+//        view.layer.shadowColor = UIColor.black.cgColor
+//        view.layer.shadowOpacity = 0.1
+//        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+//        view.layer.shadowRadius = 4
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -106,12 +106,12 @@ class TeamCell: UICollectionViewCell {
         containerView.addSubview(teamNameLabel)
         
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             
-            teamLogo.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
+            teamLogo.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 0),
             teamLogo.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             teamLogo.widthAnchor.constraint(equalToConstant: 40),
             teamLogo.heightAnchor.constraint(equalToConstant: 40),
@@ -129,7 +129,7 @@ class TeamCell: UICollectionViewCell {
 //    }
     
     func configure(with title: String) {
-        teamLogo.image = UIImage(named: "f")
+        teamLogo.image = UIImage(named: "ff")
         teamNameLabel.text = title
     
     }

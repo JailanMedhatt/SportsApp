@@ -32,6 +32,12 @@ class LeagueDetailsCollection: UICollectionViewController {
         collectionView.register(UpcomingMatchCell.self, forCellWithReuseIdentifier: "UpcomingMatchCell")
             collectionView.register(LatestEventCell.self, forCellWithReuseIdentifier: "LatestEventCell")
             collectionView.register(TeamCell.self, forCellWithReuseIdentifier: "TeamCell")
+        
+        collectionView.register(HeaderView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: HeaderView.reuseIdentifier)
+
+
             
             collectionView.dataSource = self
             collectionView.delegate = self
@@ -73,19 +79,19 @@ class LeagueDetailsCollection: UICollectionViewController {
             heightDimension: .fractionalHeight(1.0)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 22, bottom: 0, trailing: 0)
         
         // Group
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(0.92),
-            heightDimension: .absolute(180)
+            widthDimension: .fractionalWidth(0.94),
+            heightDimension: .absolute(200)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         // Section
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
-        section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 24, trailing: 16)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 16)
         section.interGroupSpacing = 16
         
         // Header
@@ -110,20 +116,20 @@ class LeagueDetailsCollection: UICollectionViewController {
             heightDimension: .fractionalHeight(1.0)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
         
         // Group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(120)
+            heightDimension: .absolute(150)
         )
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         group.interItemSpacing = .fixed(16)
         
         // Section
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 24, trailing: 0)
-        section.interGroupSpacing = 16
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0)
+        section.interGroupSpacing = 0
         
         // Header
         let headerSize = NSCollectionLayoutSize(
@@ -159,8 +165,8 @@ class LeagueDetailsCollection: UICollectionViewController {
         // Section
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 24, trailing: 0)
-        section.interGroupSpacing = 8
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0)
+        section.interGroupSpacing = 0
         
         // Header
         let headerSize = NSCollectionLayoutSize(
@@ -176,19 +182,6 @@ class LeagueDetailsCollection: UICollectionViewController {
         
         return section
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -300,13 +293,60 @@ class LeagueDetailsCollection: UICollectionViewController {
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TeamCell", for: indexPath) as! TeamCell
             // configure cell
-            cell.configure(with: "liverpool")
+            cell.configure(with: "liverpool nknk")
             
             return cell
         default:
             fatalError("Unknown section")
         }
     }
+    
+    
+    
+//    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//        if kind == UICollectionView.elementKindSectionHeader {
+//            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as! HeaderView
+//            switch indexPath.section {
+//            case 0: header.titleLabel.text = "Upcoming Matches"
+//            case 1: header.titleLabel.text = "Latest Events"
+//            case 2: header.titleLabel.text = "Teams"
+//            default: header.titleLabel.text = ""
+//            }
+//            return header
+//        }
+//        return UICollectionReusableView()
+//    }
+    
+    
+    
+    override func collectionView(_ collectionView: UICollectionView,
+                                 viewForSupplementaryElementOfKind kind: String,
+                                 at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader else {
+            fatalError("Unsupported supplementary view kind")
+        }
+
+        let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: HeaderView.reuseIdentifier,
+            for: indexPath
+        ) as! HeaderView
+        
+        switch indexPath.section {
+        case 0:
+            header.titleLabel.text = "Upcoming Matches"
+        case 1:
+            header.titleLabel.text = "Latest Events"
+        case 2:
+            header.titleLabel.text = "Teams"
+        default:
+            header.titleLabel.text = ""
+        }
+
+        return header
+    }
+
+
 
 
 
@@ -688,3 +728,35 @@ extension UIColor {
                   alpha: alpha)
     }
 }
+
+
+//import UIKit
+
+class HeaderView: UICollectionReusableView {
+    
+    static let reuseIdentifier = "HeaderView"
+
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(titleLabel)
+        
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8)
+        ])
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+

@@ -222,6 +222,24 @@ class LatestEventCell: UICollectionViewCell {
         return label
     }()
     
+    private let vsLabel: UILabel = {
+        let label = UILabel()
+        label.text = "VS"
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let scoreStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.alignment = .center
+        stack.spacing = 4
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
@@ -252,8 +270,8 @@ class LatestEventCell: UICollectionViewCell {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        iv.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        iv.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        iv.heightAnchor.constraint(equalToConstant: 60).isActive = true
         return iv
     }()
     
@@ -278,8 +296,8 @@ class LatestEventCell: UICollectionViewCell {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        iv.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        iv.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        iv.heightAnchor.constraint(equalToConstant: 60).isActive = true
         return iv
     }()
     
@@ -300,11 +318,13 @@ class LatestEventCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     private func setupViews() {
         contentView.addSubview(containerView)
         containerView.addSubview(dateLabel)
         containerView.addSubview(timeLabel)
         containerView.addSubview(scoreLabel)
+        containerView.addSubview(vsLabel)
         
         // Setup home team stack
         homeTeamStack.addArrangedSubview(homeTeamLogo)
@@ -315,6 +335,10 @@ class LatestEventCell: UICollectionViewCell {
         awayTeamStack.addArrangedSubview(awayTeamLogo)
         awayTeamStack.addArrangedSubview(awayTeamLabel)
         containerView.addSubview(awayTeamStack)
+        
+        scoreStack.addArrangedSubview(vsLabel)
+        scoreStack.addArrangedSubview(scoreLabel)
+        containerView.addSubview(scoreStack)
         
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
@@ -329,15 +353,15 @@ class LatestEventCell: UICollectionViewCell {
             timeLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 4),
             timeLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             
-            scoreLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: 8),
-            scoreLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            scoreStack.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: 16),
+            scoreStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             
-            homeTeamStack.trailingAnchor.constraint(equalTo: scoreLabel.leadingAnchor, constant: -16),
-            homeTeamStack.centerYAnchor.constraint(equalTo: scoreLabel.centerYAnchor),
+            homeTeamStack.trailingAnchor.constraint(equalTo: scoreStack.leadingAnchor, constant: -48),
+            homeTeamStack.centerYAnchor.constraint(equalTo: scoreStack.centerYAnchor),
             homeTeamStack.leadingAnchor.constraint(greaterThanOrEqualTo: containerView.leadingAnchor, constant: 12),
             
-            awayTeamStack.leadingAnchor.constraint(equalTo: scoreLabel.trailingAnchor, constant: 16),
-            awayTeamStack.centerYAnchor.constraint(equalTo: scoreLabel.centerYAnchor),
+            awayTeamStack.leadingAnchor.constraint(equalTo: scoreStack.trailingAnchor, constant: 48),
+            awayTeamStack.centerYAnchor.constraint(equalTo: scoreStack.centerYAnchor),
             awayTeamStack.trailingAnchor.constraint(lessThanOrEqualTo: containerView.trailingAnchor, constant: -12)
         ])
     }
@@ -355,8 +379,8 @@ class LatestEventCell: UICollectionViewCell {
 //    }
     
     func configure(with title: String) {
-        homeTeamLogo.image = UIImage(named: "f")
-       awayTeamLogo.image = UIImage(named: "f")
+        homeTeamLogo.image = UIImage(named: "b")
+       awayTeamLogo.image = UIImage(named: "t")
         homeTeamLabel.text = title
         awayTeamLabel.text = title
         dateLabel.text = "22-5-2021"
