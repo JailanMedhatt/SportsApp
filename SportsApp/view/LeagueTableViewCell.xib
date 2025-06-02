@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="99" id="KGk-i7-Jjw" customClass="LeagueTableViewCell" customModule="SportsApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hqb-Tj-K2D">
+                        <rect key="frame" x="16" y="8" width="288" height="84"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="b" translatesAutoresizingMaskIntoConstraints="NO" id="HNh-lg-4e1">
+                                <rect key="frame" x="16" y="2" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="4pB-b3-M9w"/>
+                                    <constraint firstAttribute="height" constant="80" id="mHO-U0-Jrn"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label Label Label Label Label Label Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yfV-4p-dt2">
+                                <rect key="frame" x="112" y="1.3333333333333357" width="125" height="81.333333333333314"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jWf-0Z-DGv">
+                                <rect key="frame" x="237" y="24.666666666666664" width="51" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="51" id="cE6-wB-8Ke"/>
+                                    <constraint firstAttribute="height" constant="35" id="dLo-i0-6N6"/>
+                                </constraints>
+                                <color key="tintColor" red="0.33333334329999997" green="0.60392159219999997" blue="0.42352938649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemGray2Color"/>
+                        <constraints>
+                            <constraint firstItem="HNh-lg-4e1" firstAttribute="centerY" secondItem="hqb-Tj-K2D" secondAttribute="centerY" id="6wa-2K-hZb"/>
+                            <constraint firstAttribute="trailing" secondItem="jWf-0Z-DGv" secondAttribute="trailing" id="INQ-pm-3yQ"/>
+                            <constraint firstItem="jWf-0Z-DGv" firstAttribute="leading" secondItem="yfV-4p-dt2" secondAttribute="trailing" id="NYp-JM-j8i"/>
+                            <constraint firstItem="HNh-lg-4e1" firstAttribute="leading" secondItem="hqb-Tj-K2D" secondAttribute="leading" constant="16" id="Si7-lD-mEc"/>
+                            <constraint firstItem="jWf-0Z-DGv" firstAttribute="centerY" secondItem="hqb-Tj-K2D" secondAttribute="centerY" id="k4o-DU-GVQ"/>
+                            <constraint firstItem="yfV-4p-dt2" firstAttribute="centerY" secondItem="hqb-Tj-K2D" secondAttribute="centerY" id="n6l-IH-1Gw"/>
+                            <constraint firstItem="yfV-4p-dt2" firstAttribute="leading" secondItem="HNh-lg-4e1" secondAttribute="trailing" constant="16" id="zV6-kc-Uft"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="hqb-Tj-K2D" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="23G-FN-8Oi"/>
+                    <constraint firstAttribute="trailing" secondItem="hqb-Tj-K2D" secondAttribute="trailing" constant="16" id="E69-TZ-b6E"/>
+                    <constraint firstItem="hqb-Tj-K2D" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="NET-vQ-7MW"/>
+                    <constraint firstAttribute="bottom" secondItem="hqb-Tj-K2D" secondAttribute="bottom" constant="8" id="nQu-xK-Rah"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="containerView" destination="hqb-Tj-K2D" id="YSA-O6-fH4"/>
+                <outlet property="heartButton" destination="jWf-0Z-DGv" id="0qj-jn-NCJ"/>
+                <outlet property="leagueImage" destination="HNh-lg-4e1" id="DIi-OG-Cm5"/>
+                <outlet property="leagueLabel" destination="yfV-4p-dt2" id="wLX-xD-1ji"/>
+            </connections>
+            <point key="canvasLocation" x="62.595419847328245" y="6.3380281690140849"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="b" width="3000" height="1957"/>
+        <image name="heart" catalog="system" width="128" height="107"/>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
