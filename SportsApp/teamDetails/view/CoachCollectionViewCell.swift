@@ -9,4 +9,6 @@ import UIKit
 
 class CoachCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var myLabel: UILabel!
+    @IBOutlet weak var name: UILabel!
 }

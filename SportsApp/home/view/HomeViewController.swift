@@ -11,18 +11,56 @@ private let reuseIdentifier = "Cell"
 
 class HomeViewController: UICollectionViewController , UICollectionViewDelegateFlowLayout {
     
-    let sports : [Sport] = [Sport(img: "f", name: "Football"), Sport(img: "c", name: "Cricket"),
+    let sports : [Sport] = [Sport(img: "fff", name: "Football"), Sport(img: "cc", name: "Cricket"),
                             Sport(img: "b", name: "Basketball"),
                             Sport(img: "t", name: "Tennis")]
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+            view.backgroundColor = .white // Your main view background
+
+           
+            let appBar = UIView()
+            appBar.backgroundColor =  UIColor(hex: "#337435")
+            appBar.translatesAutoresizingMaskIntoConstraints = false
+            appBar.layer.cornerRadius = 42
+            appBar.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner] //
+             appBar.layer.masksToBounds = true
+            view.addSubview(appBar)
+            
+           
+            NSLayoutConstraint.activate([
+                appBar.topAnchor.constraint(equalTo: view.topAnchor),
+                appBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                appBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                appBar.heightAnchor.constraint(equalToConstant: 105) // Or use view.safeAreaLayoutGuide
+            ])
+            
+            // Title label
+            let titleLabel = UILabel()
+            titleLabel.text = "Sports"
+            titleLabel.textColor = .white
+            titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            appBar.addSubview(titleLabel)
+            
+            NSLayoutConstraint.activate([
+                titleLabel.centerXAnchor.constraint(equalTo: appBar.centerXAnchor),
+                titleLabel.bottomAnchor.constraint(equalTo: appBar.bottomAnchor, constant: -12)
+            ])
+        
+
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.sectionInset = UIEdgeInsets(top: 64, left: 16, bottom: 0, right: 16)
+            layout.sectionInset = UIEdgeInsets(top: 84, left: 12, bottom: 0, right: 12)
             layout.minimumInteritemSpacing = 8 // spacing between the two cells
             layout.minimumLineSpacing = 32 // spacing between rows
         }
@@ -31,19 +69,6 @@ class HomeViewController: UICollectionViewController , UICollectionViewDelegateF
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
-  
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -65,9 +90,14 @@ class HomeViewController: UICollectionViewController , UICollectionViewDelegateF
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.width)/2-30, height: 260)
+        return CGSize(width: (collectionView.frame.width)/2-20, height: 280)
     }
-
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "teamDetails") as? TeamViewController {
+            navigationController?.pushViewController(vc, animated: true)
+        }
+        
+    }
     // MARK: UICollectionViewDelegate
 
     /*
@@ -99,4 +129,19 @@ class HomeViewController: UICollectionViewController , UICollectionViewDelegateF
     }
     */
 
+}
+extension UIColor {
+    convenience init(hex: String) {
+        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
+
+        var rgb: UInt64 = 0
+        Scanner(string: hexSanitized).scanHexInt64(&rgb)
+
+        let r = CGFloat((rgb & 0xFF0000) >> 16) / 255
+        let g = CGFloat((rgb & 0x00FF00) >> 8) / 255
+        let b = CGFloat(rgb & 0x0000FF) / 255
+
+        self.init(red: r, green: g, blue: b, alpha: 1)
+    }
 }

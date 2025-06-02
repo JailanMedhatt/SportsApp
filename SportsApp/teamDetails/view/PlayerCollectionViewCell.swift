@@ -9,4 +9,7 @@ import UIKit
 
 class PlayerCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var position: UILabel!
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var img: UIImageView!
 }

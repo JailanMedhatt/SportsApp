@@ -8,5 +8,7 @@
 import UIKit
 
 class TeamViewControllerCollectionViewCell: UICollectionViewCell {
+    @IBOutlet weak var img: UIImageView!
     
+    @IBOutlet weak var myTitle: UILabel!
 }
