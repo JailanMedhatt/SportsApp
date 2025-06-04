@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class LatestEventCell: UICollectionViewCell {
     static let reuseIdentifier = "LatestMatchCell"
@@ -188,15 +189,29 @@ class LatestEventCell: UICollectionViewCell {
 //        awayTeamLogo.image = UIImage(named: match.awayTeamLogo)
 //    }
     
-    func configure(with title: String) {
-        homeTeamLogo.image = UIImage(named: "b")
-       awayTeamLogo.image = UIImage(named: "t")
-        homeTeamLabel.text = title
-        awayTeamLabel.text = title
-        dateLabel.text = "22-5-2021"
-        timeLabel.text = "12:00 PM"
-        scoreLabel.text = "2-1"
-        //separator.isHidden = false
+    func configure(event : Event) {
+        
+//        if let homeLogoURLString = event.participant1Logo, let homeLogoURL = URL(string: homeLogoURLString) {
+//            homeTeamLogo.kf.setImage(with: homeLogoURL, placeholder: UIImage(named: "f"))
+//        } else {
+//            homeTeamLogo.image = UIImage(named: "f") // fallback image
+//        }
+//
+//        // Load away team logo
+//        if let awayLogoURLString = event.participant2Logo, let awayLogoURL = URL(string: awayLogoURLString) {
+//            awayTeamLogo.kf.setImage(with: awayLogoURL, placeholder: UIImage(named: "t"))
+//        } else {
+//            awayTeamLogo.image = UIImage(named: "t")
+//        }
+              
+        homeTeamLogo.kf.setImage(with: URL(string: event.participant1Logo ?? "") , placeholder: UIImage(named: "f"))
+        awayTeamLogo.kf.setImage(with: URL(string: event.participant2Logo ?? "") , placeholder: UIImage(named: "f"))
+        homeTeamLabel.text = event.participant1Name
+        awayTeamLabel.text = event.participant2Name
+        dateLabel.text = event.eventDate
+        timeLabel.text = event.eventTime
+        scoreLabel.text = event.eventFinalResult
+       
     
     }
     

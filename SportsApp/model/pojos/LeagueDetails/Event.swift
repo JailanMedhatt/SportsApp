@@ -4,6 +4,7 @@
 //
 //  Created by Iman Mahmoud on 04/06/2025.
 //
+
 struct Event: Decodable {
     // Common fields
     let eventKey: Int?
@@ -80,4 +81,5 @@ struct Event: Decodable {
         var participant2Key: Int? {
             return awayTeamKey ?? secondPlayerKey
         }
+    
 }

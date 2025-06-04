@@ -1,0 +1,110 @@
+//
+//  LeagueDetailsPresenter.swift
+//  SportsApp
+//
+//  Created by Iman Mahmoud on 04/06/2025.
+//
+
+import Foundation
+
+class LeagueDetailsPresenter{
+    
+    private  var upcomingEvents: [Event]?
+    private  var latestEvents: [Event] = []
+    private var teams: [Team] = []
+    
+    var ref : LeagueDetailsProtocol!
+    var league : LeagueDataModel?
+    
+    init(ref: LeagueDetailsProtocol, league: LeagueDataModel) {
+        self.ref = ref
+        self.league = league
+    }
+    
+    
+    func fetchLeaguesDetails(){
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        fetchUpcomingEvents{
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        fetchLatestEvents{
+            dispatchGroup.leave()
+        }
+
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            guard let self else { return }
+            self.extractTeams()
+            self.ref.setLeagueDetails(upcomingEvents: upcomingEvents, latestEvents: latestEvents, teams: teams)
+          
+        }
+
+                
+    }
+    
+    
+  private  func fetchUpcomingEvents(completion: @escaping () -> Void){
+        NetworkManager.fetchEvents(for:league?.sport ?? "", leagueId: league?.league_key ?? 0, fromDate: Date().toString(),toDate: Date().nextYear().toString()) { [weak self] events in
+            
+            self?.upcomingEvents = events 
+            
+            completion()
+            
+            //            guard let self = self else { return }
+            //            self.extractTeams(from: events ?? [])
+            //            self.ref?.setLeagueDetails(upcomingMatches: events ?? [], pastMatches: [], teams: Array(self.teams))
+        }
+        
+        
+    }
+    
+    private func fetchLatestEvents(completion: @escaping () -> Void){
+        
+        NetworkManager.fetchEvents(for:league?.sport ?? "", leagueId: league?.league_key ?? 0, fromDate:Date().lastYear().toString() ,toDate:Date().toString() ) { [weak self] events in
+            
+            self?.latestEvents = events ?? []
+            
+            completion()
+            
+        }
+    }
+        
+        
+        
+        private func extractTeams(/*from events: [Event]*/) {
+            var allTeams = Set<Team>()
+            let events = upcomingEvents ?? [] + latestEvents
+            
+            // Include existing teams
+//            for team in self.teams {
+//                allTeams.insert(team)
+//            }
+            
+            // Add new teams from events
+            for event in events {
+                let participant = Team(teamKey: event.participant1Key,
+                                       teamName: event.participant1Name,
+                                       teamLogo: event.participant1Logo)
+                //            let awayTeam = Team(teamKey: event.awayTeamKey,
+                //                               teamName: event.awayTeam,
+                //                               teamLogo: event.awayTeamLogo)
+                
+                allTeams.insert(participant)
+                //            allTeams.insert(awayTeam)
+            }
+            
+            self.teams = Array(allTeams)
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+    
+}

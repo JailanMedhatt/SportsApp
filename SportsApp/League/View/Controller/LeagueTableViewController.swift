@@ -78,6 +78,20 @@ class LeagueTableViewController: UITableViewController, LeagueProtocol {
         return cell
     }
     
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedLeague = leagues[indexPath.row]
+        selectedLeague.sport = presenter?.sport.lowercased() ?? ""
+        
+        let sb = UIStoryboard(name: "Core", bundle: nil)
+    
+        if let vc = sb.instantiateViewController(withIdentifier: "LeagueDetails") as? LeagueDetailsCollection {
+            let presenter = LeagueDetailsPresenter(ref: vc,league: selectedLeague)
+            vc.presenter = presenter
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
 
     /*
     // Override to support conditional editing of the table view.

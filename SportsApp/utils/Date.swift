@@ -5,7 +5,7 @@
 //  Created by Iman Mahmoud on 04/06/2025.
 //
 
-import UIKit
+import Foundation
 
 extension Date {
     func toString(format: String = "yyyy-MM-dd") -> String {

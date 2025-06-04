@@ -184,15 +184,13 @@ class UpcomingMatchCell: UICollectionViewCell {
         ])
     }
     
-//    func configure(with match: Match) {
-//        homeTeamLabel.text = match.homeTeam
-//        awayTeamLabel.text = match.awayTeam
-//        dateLabel.text = match.date
-//        timeLabel.text = match.time
-//        
-//        // Set team logos (replace with your image loading logic)
-//        homeTeamLogo.image = UIImage(named: match.homeTeamLogo)
-//        awayTeamLogo.image = UIImage(named: match.awayTeamLogo)
+//    func configure(event : Event) {
+//        homeTeamLogo.kf.setImage(with: URL(string: event.participant1Logo ?? "") , placeholder: UIImage(named: "f"))
+//        awayTeamLogo.kf.setImage(with: URL(string: event.participant2Logo ?? "") , placeholder: UIImage(named: "f"))
+//        homeTeamLabel.text = event.participant1Name
+//        awayTeamLabel.text = event.participant2Name
+//        dateLabel.text = event.eventDate
+//        timeLabel.text = event.eventTime
 //    }
     
     func configure(with title: String) {
