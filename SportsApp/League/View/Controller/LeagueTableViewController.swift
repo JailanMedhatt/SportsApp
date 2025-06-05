@@ -14,6 +14,43 @@ class LeagueTableViewController: UITableViewController, LeagueProtocol {
     var presenter : LeaguePresenter!
     override func viewDidLoad() {
         super.viewDidLoad()
+        let appBar = UIView()
+        appBar.backgroundColor = UIColor(hex: "#337435")
+        appBar.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 64)
+        appBar.layer.cornerRadius = 42
+        appBar.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        appBar.layer.masksToBounds = true
+
+        // Title Label
+        let titleLabel = UILabel()
+        titleLabel.text = "Leagues"
+        titleLabel.textColor = .white
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        appBar.addSubview(titleLabel)
+
+        // Back button
+        let backButton = UIButton(type: .system)
+        backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        backButton.tintColor = .white
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
+        appBar.addSubview(backButton)
+
+        // Auto Layout for title and button
+        NSLayoutConstraint.activate([
+            titleLabel.centerXAnchor.constraint(equalTo: appBar.centerXAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: appBar.bottomAnchor, constant: -12),
+            
+            backButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            backButton.leadingAnchor.constraint(equalTo: appBar.leadingAnchor, constant: 16),
+            backButton.widthAnchor.constraint(equalToConstant: 28),
+            backButton.heightAnchor.constraint(equalToConstant: 28)
+        ])
+
+        // Set as header
+        tableView.tableHeaderView = appBar
+
         presenter.fetchLeagues()
         indicator = UIActivityIndicatorView(style: .large)
         indicator?.center = self.view.center
@@ -41,6 +78,9 @@ class LeagueTableViewController: UITableViewController, LeagueProtocol {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    @objc func handleBack() {
+        navigationController?.popViewController(animated: true)
     }
 
     // MARK: - Table view data source
@@ -72,6 +112,40 @@ class LeagueTableViewController: UITableViewController, LeagueProtocol {
         as! LeagueTableViewCell
         cell.leagueImage.kf.setImage(with: URL(string: leagues[indexPath.item].league_logo ?? "")  ,placeholder: UIImage(named: "f"))
         cell.leagueLabel.text = leagues[indexPath.row].league_name
+        var isLiked = presenter.isLeagueinfav(leagueKey: leagues[indexPath.row].league_key!)
+        if isLiked {
+            cell.isLiked = true
+        }
+        else{cell.isLiked = false
+        }
+        cell.closure = { [weak self] in
+            
+            var league = self?.leagues[indexPath.row] ?? LeagueDataModel(league_key: 0, league_name: "", league_logo: "", sport: "")
+            league.sport = self?.presenter.sport
+            if(!isLiked){
+                self?.presenter.addLeagueToFavorite(league: league)
+                cell.isLiked.toggle()
+                cell.updateHeartIcon()
+                self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+            else {
+                var alertDialoug = UIAlertController(title: "Delete", message: "Are you sure you want to delete this league from your favorites?", preferredStyle: .alert)
+                var action1 = UIAlertAction(title: "Yes", style: .default) { (_) in
+                    self?.presenter.deleteLeagueToFavorite(leagueKey: league.league_key!)
+                    cell.isLiked.toggle()
+                    cell.updateHeartIcon()
+                    self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
+                var action2 = UIAlertAction(title: "No", style: .default)
+                alertDialoug.addAction(action1)
+                alertDialoug.addAction(action2)
+                self?.present(alertDialoug, animated: true)
+               
+            }
+          //  self?.tableView.reloadData()
+           
+        }
+        
 
         // Configure the cell...
 
