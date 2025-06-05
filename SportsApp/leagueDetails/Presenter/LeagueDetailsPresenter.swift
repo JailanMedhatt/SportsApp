@@ -21,7 +21,6 @@ class LeagueDetailsPresenter{
         self.league = league
     }
     
-    
     func fetchLeaguesDetails(){
         let dispatchGroup = DispatchGroup()
         
@@ -29,6 +28,7 @@ class LeagueDetailsPresenter{
         fetchUpcomingEvents{
             dispatchGroup.leave()
         }
+        
         
         dispatchGroup.enter()
         fetchLatestEvents{
@@ -47,18 +47,15 @@ class LeagueDetailsPresenter{
     
     
   private  func fetchUpcomingEvents(completion: @escaping () -> Void){
-        NetworkManager.fetchEvents(for:league?.sport ?? "", leagueId: league?.league_key ?? 0, fromDate: Date().toString(),toDate: Date().nextYear().toString()) { [weak self] events in
+//        NetworkManager.fetchEvents(for:league?.sport ?? "", leagueId: league?.league_key ?? 0, fromDate: Date().toString(),toDate: Date().nextYear().toString()) { [weak self] events in
+      
+      NetworkManager.fetchEvents(for:league?.sport ?? "", leagueId: league?.league_key ?? 0, fromDate:Date().lastYear().toString() ,toDate:Date().toString() ) { [weak self] events in
             
             self?.upcomingEvents = events 
             
             completion()
             
-            //            guard let self = self else { return }
-            //            self.extractTeams(from: events ?? [])
-            //            self.ref?.setLeagueDetails(upcomingMatches: events ?? [], pastMatches: [], teams: Array(self.teams))
         }
-        
-        
     }
     
     private func fetchLatestEvents(completion: @escaping () -> Void){
@@ -71,40 +68,57 @@ class LeagueDetailsPresenter{
             
         }
     }
+    
+    private func extractTeams(/*from events: [Event]*/) {
+        var allTeams = Set<Team>()
+        let events = upcomingEvents ?? [] + latestEvents
         
-        
-        
-        private func extractTeams(/*from events: [Event]*/) {
-            var allTeams = Set<Team>()
-            let events = upcomingEvents ?? [] + latestEvents
+        for event in events {
+            let participant = Team(teamKey: event.participant1Key,
+                                   teamName: event.participant1Name,
+                                   teamLogo: event.participant1Logo)
             
-            // Include existing teams
-//            for team in self.teams {
-//                allTeams.insert(team)
-//            }
-            
-            // Add new teams from events
-            for event in events {
-                let participant = Team(teamKey: event.participant1Key,
-                                       teamName: event.participant1Name,
-                                       teamLogo: event.participant1Logo)
-                //            let awayTeam = Team(teamKey: event.awayTeamKey,
-                //                               teamName: event.awayTeam,
-                //                               teamLogo: event.awayTeamLogo)
-                
-                allTeams.insert(participant)
-                //            allTeams.insert(awayTeam)
-            }
-            
-            self.teams = Array(allTeams)
+            allTeams.insert(participant)
         }
         
+        self.teams = Array(allTeams)
+    }
         
         
         
-        
-        
-        
+  
         
     
 }
+
+
+//            guard let self = self else { return }
+//            self.extractTeams(from: events ?? [])
+//            self.ref?.setLeagueDetails(upcomingMatches: events ?? [], pastMatches: [], teams: Array(self.teams))
+
+
+
+//private func extractTeams(/*from events: [Event]*/) {
+//    var allTeams = Set<Team>()
+//    let events = upcomingEvents ?? [] + latestEvents
+//    
+//    // Include existing teams
+////            for team in self.teams {
+////                allTeams.insert(team)
+////            }
+//    
+//    // Add new teams from events
+//    for event in events {
+//        let participant = Team(teamKey: event.participant1Key,
+//                               teamName: event.participant1Name,
+//                               teamLogo: event.participant1Logo)
+//        //            let awayTeam = Team(teamKey: event.awayTeamKey,
+//        //                               teamName: event.awayTeam,
+//        //                               teamLogo: event.awayTeamLogo)
+//        
+//        allTeams.insert(participant)
+//        //            allTeams.insert(awayTeam)
+//    }
+//    
+//    self.teams = Array(allTeams)
+//}

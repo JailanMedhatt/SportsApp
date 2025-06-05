@@ -33,9 +33,14 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
         indicator?.startAnimating()
         
         
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-            collectionView.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(collectionView)
+//        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+//        collectionView.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(collectionView)
+        
+        collectionView.setCollectionViewLayout(createLayout(), animated: false)
+
+        
+           
 
             NSLayoutConstraint.activate([
                 collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -74,7 +79,7 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
         upcomingMatches = upcomingEvents
         latestMatches = latestEvents
         self.teams = teams
-        print(upcomingMatches?.count)
+        print("uppppppp \(upcomingMatches?.count)")
 
         collectionView?.reloadData()
     
@@ -229,7 +234,7 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0: return upcomingMatches?.count ?? 1
+        case 0: return upcomingMatches?.count ?? 0
         case 1: return latestMatches?.count ?? 0
         case 2: return teams?.count ?? 0
         default: return 0
@@ -243,9 +248,9 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
             
     
             
-           // cell.configure(event: upcomingMatches![indexPath.item])
-            
-            cell.configure(with: "liverPool")
+           //cell.configure(event: upcomingMatches![indexPath.item])
+            cell.configure(event: upcomingMatches![indexPath.item])
+           // cell.configure(with: "liverPool")
             
             
             
