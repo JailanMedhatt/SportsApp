@@ -51,6 +51,25 @@ class NetworkManager {
             }
         }
     
+    static func fetchTeamDetails(for sport: String, teamId: Int, completion: @escaping ([TeamDetails]?) -> Void) {
+             let urlString = baseUrl + "/\(sport)/"
+             let parameters: Parameters = [
+                 "met": "Teams",
+                 "APIkey": apiKey,
+                 "teamId": teamId
+             ]
+
+             AF.request(urlString, parameters: parameters).responseDecodable(of: Response<TeamDetails>.self) { response in
+                 switch response.result {
+                 case .success(let apiResponse):
+                     completion(apiResponse.result)
+                 case .failure(let error):
+                     print("Error fetching events: \(error)")
+                     completion(nil)
+                 }
+             }
+         }
+    
     
  
 }

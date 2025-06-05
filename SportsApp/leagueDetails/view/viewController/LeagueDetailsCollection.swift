@@ -81,9 +81,9 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
         upcomingMatches = upcomingEvents
         latestMatches = latestEvents
         self.teams = teams
-        print("uppppppp \(upcomingMatches?.count)")
+     //   print("uppppppp \(upcomingMatches?.count)")
         
-        print("teeeeeeeeeeeeeeeeems\(teams?[0].teamKey)")
+      //  print("teeeeeeeeeeeeeeeeems\(teams?[0].teamKey)")
 
         collectionView?.reloadData()
     
@@ -286,6 +286,26 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
             return cell
         default:
             fatalError("Unknown section")
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 2:
+            guard let teams = teams/*, indexPath.item < teams.count*/ , presenter.league?.sport != "tennis" else { return }
+            let selectedTeam = teams[indexPath.item]
+            
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+        
+            if let vc = sb.instantiateViewController(withIdentifier: "teamDetails") as? TeamViewController {
+                
+                let presenter = TeamDetailsPresenter(ref: vc, teamId: selectedTeam.teamKey ?? 0, sport: presenter.league?.sport ?? "")
+                vc.presenter = presenter
+                navigationController?.pushViewController(vc, animated: true)
+            }
+            
+        default:
+            break
         }
     }
     
