@@ -11,7 +11,8 @@ class LeagueTableViewCell: UITableViewCell {
 
     @IBOutlet weak var heartButton: UIButton!
     @IBOutlet weak var containerView: UIView!
-
+    var closure : (()-> ()) = {}
+    var isLiked : Bool = false
     @IBOutlet weak var leagueLabel: UILabel!
     @IBOutlet weak var leagueImage: UIImageView!
     override func awakeFromNib() {
@@ -29,10 +30,9 @@ class LeagueTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        updateHeartIcon()
         leagueImage.layer.cornerRadius = leagueImage.frame.size.width / 2
            leagueImage.clipsToBounds = true
-        
         containerView.layer.cornerRadius = 12
         containerView.layer.borderWidth = 3
        // containerView.layer.borderColor = UIColor(named: "CustomGreen")?.cgColor
@@ -57,5 +57,15 @@ class LeagueTableViewCell: UITableViewCell {
 //        self.layer.masksToBounds = false
     }
 
+    @IBAction func fav(_ sender: Any) {
+        self.closure()
+//        isLiked.toggle()
+//        updateHeartIcon()
+    }
+     func updateHeartIcon() {
+            let imageName = isLiked ? "heart.fill" : "heart"
+            let image = UIImage(systemName: imageName)
+            heartButton.setImage(image, for: .normal)
+        }
     
 }
