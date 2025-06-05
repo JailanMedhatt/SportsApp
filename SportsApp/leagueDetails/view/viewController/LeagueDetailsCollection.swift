@@ -238,7 +238,7 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0: return upcomingMatches?.count ?? 0
+        case 0: return  upcomingMatches?.count ?? 1 // max(upcomingMatches?.count ?? 0, 1)
         case 1: return latestMatches?.count ?? 0
         case 2: return teams?.count ?? 0
         default: return 0
@@ -250,10 +250,16 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UpcomingMatchCell", for: indexPath) as! UpcomingMatchCell
             
+            if let upcomingMatches = upcomingMatches , !upcomingMatches.isEmpty {
+                cell.configure(event: upcomingMatches[indexPath.item])
+            }else{
+                cell.configure(event: nil)
+            }
+            
     
             
            //cell.configure(event: upcomingMatches![indexPath.item])
-            cell.configure(event: upcomingMatches![indexPath.item])
+         //   cell.configure(event: upcomingMatches![indexPath.item])
            // cell.configure(with: "liverPool")
             
             
@@ -318,9 +324,9 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
         case 0:
             header.titleLabel.text = "Upcoming Matches"
         case 1:
-            header.titleLabel.text = "Latest Events"
+            header.titleLabel.text = "Recent Matches"
         case 2:
-            header.titleLabel.text = "Teams"
+            header.titleLabel.text = presenter.league?.sport == "tennis" ? "Players" : "Teams"
         default:
             header.titleLabel.text = ""
         }
