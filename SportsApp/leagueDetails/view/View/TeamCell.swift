@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 
 class TeamCell: UICollectionViewCell {
@@ -75,17 +76,19 @@ class TeamCell: UICollectionViewCell {
     
     // use this
     
-//    func configure(with team: Team) {    // replace with the real team model 
-//        teamNameLabel.text = team.name
-//         teamLogo.image = UIImage(named: team.logo)  // replace with kingFisher pod
-//    }
+    func configure(team: Team) {   
+        teamNameLabel.text = team.teamName
+        teamLogo.kf.setImage(with: URL(string: team.teamLogo ?? "") , placeholder: UIImage(named: "f"))
+        // teamLogo.image = UIImage(named: team.logo)
+  
+    }
     
     // ay 7aga 3ashan agarb
     
-    func configure(with title: String) {
-        teamLogo.image = UIImage(named: "ff")
-        teamNameLabel.text = title
-    
-    }
+//    func configure(with title: String) {
+//        teamLogo.image = UIImage(named: "ff")
+//        teamNameLabel.text = title
+//    
+//    }
 }
 

@@ -17,7 +17,7 @@ class NetworkManager {
             switch response.result {
             case .success(let value):
                 do {
-                    let response = try JSONDecoder().decode(Response.self, from: value )
+                    let response = try JSONDecoder().decode(Response<LeagueDataModel>.self, from: value )
                     handler(response.result)
                 } catch {
                     print(error.localizedDescription)
@@ -29,4 +29,25 @@ class NetworkManager {
             }
         }
     }
+    
+   static func fetchEvents(for sport: String, leagueId: Int, fromDate: String, toDate: String, completion: @escaping ([Event]?) -> Void) {
+            let urlString = baseUrl + "/\(sport)/"
+            let parameters: Parameters = [
+                "met": "Fixtures",
+                "APIkey": apiKey,
+                "from": fromDate,
+                "to": toDate,
+                "leagueId": leagueId
+            ]
+
+            AF.request(urlString, parameters: parameters).responseDecodable(of: Response<Event>.self) { response in
+                switch response.result {
+                case .success(let apiResponse):
+                    completion(apiResponse.result)
+                case .failure(let error):
+                    print("Error fetching events: \(error)")
+                    completion(nil)
+                }
+            }
+        }
 }

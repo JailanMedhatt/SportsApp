@@ -9,17 +9,38 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class LeagueDetailsCollection: UICollectionViewController {
+class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol {
     
+    
+   
+    
+    
+    var indicator : UIActivityIndicatorView?
+    var upcomingMatches : [Event]?
+    var latestMatches : [Event]?
+    var teams : [Team]?
+    var presenter : LeagueDetailsPresenter!
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        presenter.fetchLeaguesDetails()
         
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-            collectionView.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(collectionView)
+        indicator = UIActivityIndicatorView(style: .large)
+        indicator?.center = self.view.center
+        self.view.addSubview(indicator!)
+        indicator?.startAnimating()
+        
+        
+//        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+//        collectionView.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(collectionView)
+        
+        collectionView.setCollectionViewLayout(createLayout(), animated: false)
+
+        
+           
 
             NSLayoutConstraint.activate([
                 collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -52,6 +73,23 @@ class LeagueDetailsCollection: UICollectionViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+    func setLeagueDetails(upcomingEvents: [Event]?, latestEvents: [Event]?, teams: [Team]?) {
+        indicator?.stopAnimating()
+        upcomingMatches = upcomingEvents
+        latestMatches = latestEvents
+        self.teams = teams
+        print("uppppppp \(upcomingMatches?.count)")
+
+        collectionView?.reloadData()
+    
+    }
+    
+
+    
+   
+    
+    
     
     
     func createLayout() -> UICollectionViewCompositionalLayout {
@@ -121,7 +159,7 @@ class LeagueDetailsCollection: UICollectionViewController {
         // Group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(150)
+            heightDimension: .absolute(180)
         )
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         group.interItemSpacing = .fixed(16)
@@ -196,9 +234,9 @@ class LeagueDetailsCollection: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0: return 5 //upcomingMatches.count
-        case 1: return 10//latestEvents.count
-        case 2: return 10 //teams.count
+        case 0: return upcomingMatches?.count ?? 0
+        case 1: return latestMatches?.count ?? 0
+        case 2: return teams?.count ?? 0
         default: return 0
         }
     }
@@ -210,7 +248,10 @@ class LeagueDetailsCollection: UICollectionViewController {
             
     
             
-            cell.configure(with: "liverpool")
+           //cell.configure(event: upcomingMatches![indexPath.item])
+            cell.configure(event: upcomingMatches![indexPath.item])
+           // cell.configure(with: "liverPool")
+            
             
             
             
@@ -221,7 +262,7 @@ class LeagueDetailsCollection: UICollectionViewController {
             // configure cell
             
             
-            cell.configure(with: "liverpool")
+            cell.configure(event: latestMatches![indexPath.item])
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TeamCell", for: indexPath) as! TeamCell
@@ -230,7 +271,7 @@ class LeagueDetailsCollection: UICollectionViewController {
 //            let team = teams[indexPath.item]
 //            cell.configure(with: team)
             
-            cell.configure(with: "liverpool")
+            cell.configure(team: teams![indexPath.item])
             
             return cell
         default:
