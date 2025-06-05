@@ -14,7 +14,7 @@ class TeamCell: UICollectionViewCell {
     
     private let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
        // view.layer.cornerRadius = 12
      //  view.layer.borderWidth = 1
      //  view.layer.borderColor = UIColor(hex: "#379C67").cgColor

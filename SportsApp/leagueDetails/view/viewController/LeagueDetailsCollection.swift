@@ -32,6 +32,8 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
         self.view.addSubview(indicator!)
         indicator?.startAnimating()
         
+        print("teeeeeeeeeeeeeeeeems\(teams?[0].teamKey)")
+        
         
 //        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
 //        collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -80,6 +82,8 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
         latestMatches = latestEvents
         self.teams = teams
         print("uppppppp \(upcomingMatches?.count)")
+        
+        print("teeeeeeeeeeeeeeeeems\(teams?[0].teamKey)")
 
         collectionView?.reloadData()
     
