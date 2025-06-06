@@ -13,18 +13,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-//        _ = NetworkMonitor.shared
+  
         NetworkMonitor.shared.onConnected = {
-            // Implicit action on connection
+      
             print("Try syncing with server again")
-            // Retry API calls, remove offline banners, etc.
+       
         }
 
         NetworkMonitor.shared.onDisconnected = {
-            // Implicit action on disconnection
+      
           
             let alert = UIAlertController(title: "No Internet Connection", message: "Please check your internet connection.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
