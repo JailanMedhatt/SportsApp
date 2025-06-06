@@ -66,7 +66,7 @@ class LeagueDetailsPresenter : LeagueDetailsPresenterProtocol{
     
     private func fetchLatestEvents(completion: @escaping () -> Void){
         
-        NetworkManager.fetchEvents(for:league?.sport ?? "", leagueId: league?.league_key ?? 0, fromDate:Date().lastYear().toString() ,toDate:Date().toString() ) { [weak self] events in
+        NetworkManager.fetchEvents(for:league?.sport?.lowercased() ?? "", leagueId: league?.league_key ?? 0, fromDate:Date().lastYear().toString() ,toDate:Date().toString() ) { [weak self] events in
             
             self?.latestEvents = events ?? []
             

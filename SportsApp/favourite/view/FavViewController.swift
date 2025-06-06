@@ -159,14 +159,14 @@ class FavViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
          let selectedLeague = leaguesArrays[indexPath.section][indexPath.row]
-         print("\(selectedLeague.league_key)" + "keeyy")
+         print("\(selectedLeague.sport)" + "keeyy")
        if NetworkMonitor.shared.isConnected ?? true {
              
                  let sb = UIStoryboard(name: "Core", bundle: nil)
              
                  if let vc = sb.instantiateViewController(withIdentifier: "LeagueDetails") as? LeagueDetailsCollection {
-                     let presenter = LeagueDetailsPresenter(ref: vc,league: selectedLeague)
-                     vc.presenter = presenter
+                     let dpresenter = LeagueDetailsPresenter(ref: vc,league: selectedLeague)
+                     vc.presenter = dpresenter
                      navigationController?.pushViewController(vc, animated: true)
                  }
          }
