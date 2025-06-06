@@ -1,24 +1,28 @@
 PODS:
   - Alamofire (5.10.2)
   - Kingfisher (7.12.0)
+  - lottie-ios (4.4.1)
   - ReachabilitySwift (5.2.4)
 
 DEPENDENCIES:
   - Alamofire
   - Kingfisher (~> 7.0)
+  - lottie-ios
   - ReachabilitySwift
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - Kingfisher
+    - lottie-ios
     - ReachabilitySwift
 
 SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
   Kingfisher: 53a10ea35051a436b5fb626ca2dd8f3144d755e9
+  lottie-ios: e047b1d2e6239b787cc5e9755b988869cf190494
   ReachabilitySwift: 32793e867593cfc1177f5d16491e3a197d2fccda
 
-PODFILE CHECKSUM: 43d40360928806f2656d9864d558c33ba22a1dbc
+PODFILE CHECKSUM: 50db0814bbc845969aeb499aadc85aac5e19a249
 
 COCOAPODS: 1.16.2

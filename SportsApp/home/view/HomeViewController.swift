@@ -8,9 +8,11 @@
 import UIKit
 
 private let reuseIdentifier = "Cell"
+import Reachability
 
 class HomeViewController: UICollectionViewController , UICollectionViewDelegateFlowLayout {
-    
+
+    // var reachability: Reachability!
     let sports : [Sport] = [Sport(img: "fff", name: "Football"), Sport(img: "cc", name: "Cricket"),
                             Sport(img: "b", name: "Basketball"),
                             Sport(img: "t", name: "Tennis")]
@@ -18,9 +20,25 @@ class HomeViewController: UICollectionViewController , UICollectionViewDelegateF
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+       // startObservingNetworkStatus()
+//        do {
+//            reachability = try Reachability()
+//            try reachability.startNotifier()
+//            
+//        } catch {
+//            
+//        }
+//        reachability.whenUnreachable = { [weak self] _ in
+//            print("Not reachable")
+////            self.isConnected = false
+//           // reachabilityChanged()
+//            
+//            self?.presentNoConnectionAlert()
+//            self?.restartReachabilityNotifier()
+//        }
             view.backgroundColor = .white // Your main view background
 
            
@@ -68,6 +86,14 @@ class HomeViewController: UICollectionViewController , UICollectionViewDelegateF
 
         // Do any additional setup after loading the view.
     }
+//    private func restartReachabilityNotifier() {
+//        do {
+//            reachability.stopNotifier()
+//            try reachability.startNotifier()
+//        } catch {
+//            print("Failed to restart Reachability notifier")
+//        }
+//    }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -93,13 +119,19 @@ class HomeViewController: UICollectionViewController , UICollectionViewDelegateF
         return CGSize(width: (collectionView.frame.width)/2-20, height: 280)
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let sb = UIStoryboard(name: "Core", bundle: nil)
-    
-        if let vc = sb.instantiateViewController(withIdentifier: "Leagues") as? LeagueTableViewController {
-            let presenter = LeaguePresenter(ref:  vc, sport: sports[indexPath.item].name.lowercased())
-            vc.presenter = presenter
-            navigationController?.pushViewController(vc, animated: true)
+       if NetworkMonitor.shared.isConnected ?? true {
+            let sb = UIStoryboard(name: "Core", bundle: nil)
+        
+            if let vc = sb.instantiateViewController(withIdentifier: "Leagues") as? LeagueTableViewController {
+                let presenter = LeaguePresenter(ref:  vc, sport: sports[indexPath.item].name)
+                vc.presenter = presenter
+                navigationController?.pushViewController(vc, animated: true)
+            }
+}
+        else {
+            presentNoConnectionAlert()
         }
+      
         
     }
     // MARK: UICollectionViewDelegate
@@ -132,6 +164,7 @@ class HomeViewController: UICollectionViewController , UICollectionViewDelegateF
     
     }
     */
+
 
 }
 extension UIColor {

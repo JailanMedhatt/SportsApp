@@ -6,8 +6,14 @@
 //
 
 import Foundation
+protocol LeagueDetailsPresenterProtocol {
+    var ref: LeagueDetailsProtocol! { get set }
+    var league: LeagueDataModel? { get set }
+    func fetchLeaguesDetails()
+}
 
-class LeagueDetailsPresenter{
+
+class LeagueDetailsPresenter : LeagueDetailsPresenterProtocol{
     
     private  var upcomingEvents: [Event]?
     private  var latestEvents: [Event] = []

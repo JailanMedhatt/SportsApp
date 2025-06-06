@@ -19,12 +19,13 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
     var upcomingMatches : [Event]?
     var latestMatches : [Event]?
     var teams : [Team]?
-    var presenter : LeagueDetailsPresenter!
+    var presenter : LeagueDetailsPresenterProtocol!
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        startObservingNetworkStatus()
+        self.title = presenter.league?.league_name ?? "League Details"
         presenter.fetchLeaguesDetails()
         
         indicator = UIActivityIndicatorView(style: .large)
