@@ -180,7 +180,7 @@ class TeamViewController: UICollectionViewController, TeamDeatilsProtocol {
         case 1:
             return 1
         default:
-            return 10
+            return teamDetailsList?.first?.players?.count ?? 0
         }
     }
 
@@ -188,7 +188,7 @@ class TeamViewController: UICollectionViewController, TeamDeatilsProtocol {
         
        // if let teamDetails = teamDetailsList
         guard let teamDetails = teamDetailsList?.first else {
-              
+               // Return empty cells if no team details available
                return collectionView.dequeueReusableCell(withReuseIdentifier: "teamCell", for: indexPath)
            }
         
