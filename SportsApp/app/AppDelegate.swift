@@ -14,6 +14,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        //NetworkMonitor.shared.startMonitoring()
+            
+            // Optional: Perform initial network check
+//            if !NetworkMonitor.shared.isConnected {
+//                NetworkMonitor.shared.showDisconnectionAlert()
+//            }
         // Override point for customization after application launch.
         return true
     }

@@ -1,14 +1,13 @@
 
-struct Match {
-    let homeTeam: String
-    let awayTeam: String
-    let date: String
-    let time: String
-    let score: String?
-    let isUpcoming: Bool
-}
-
-struct Team {
-    let name: String
-    let logo: String // or UIImage
-}
+//struct Match {
+//    let homeTeam: String
+//    let awayTeam: String
+//    let date: String
+//    let time: String
+//    let score: String?
+//}
+//
+//struct Team {
+//    let name: String
+//    let logo: String
+//}
