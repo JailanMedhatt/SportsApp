@@ -27,7 +27,7 @@ class LeagueTableViewController: UITableViewController, LeagueProtocol {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-       startObservingNetworkStatus()
+      
         self.title = "\(presenter.sport ?? "") Leagues"
         presenter.fetchLeagues()
         indicator = UIActivityIndicatorView(style: .large)

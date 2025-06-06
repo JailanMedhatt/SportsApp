@@ -14,7 +14,7 @@ class LeaguePresenter : LeaguePresenterProtocol{
         self.sport = sport
     }
     func fetchLeagues() {
-        NetworkManager.fetchLeagues(sport: self.sport!.lowercased(), handler: {[weak self] leagues in self?.ref?.getLeagues(leagues: leagues)})
+        NetworkManager.shared.fetchLeagues(sport: self.sport!.lowercased(), handler: {[weak self] leagues in self?.ref?.getLeagues(leagues: leagues)})
     }
     func addLeagueToFavorite(league: LeagueDataModel) {
         DatabaseManager.addLeague(leagueObj: league)

@@ -47,7 +47,7 @@ class FavViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
      override func viewDidLoad() {
         super.viewDidLoad()
-         startObservingNetworkStatus()
+        
          loadAppBar()
          tableView.dataSource = self
          tableView.delegate = self
@@ -132,16 +132,16 @@ class FavViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         if editingStyle == .delete {
             // Delete the row from the data source
             let alertDialoug = UIAlertController(title: "Delete", message: "Are you sure you want to delete this league from your favorites?", preferredStyle: .alert)
-            let action1 = UIAlertAction(title: "Yes", style: .default) { (_) in
-                self.presenter.deleteLeagueToFavorite(leagueKey: self.leaguesArrays[indexPath.section][indexPath.item].league_key!)
-                self.leaguesArrays[indexPath.section].remove(at: indexPath.item)
-                if self.leaguesArrays[indexPath.section].count == 0 {
-                    self.myHeaders.remove(at: indexPath.section)
-                    self.leaguesArrays.remove(at: indexPath.section)
+            let action1 = UIAlertAction(title: "Yes", style: .default) { [weak self] (_) in
+                self?.presenter.deleteLeagueToFavorite(leagueKey: self?.leaguesArrays[indexPath.section][indexPath.item].league_key ?? 0)
+                self?.leaguesArrays[indexPath.section].remove(at: indexPath.item)
+                if self?.leaguesArrays[indexPath.section].count == 0 {
+                    self?.myHeaders.remove(at: indexPath.section)
+                    self?.leaguesArrays.remove(at: indexPath.section)
                     
                 }
                              
-                self.reloadData()
+                self?.reloadData()
 
             }
             let action2 = UIAlertAction(title: "No", style: .default)
@@ -159,7 +159,7 @@ class FavViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
          let selectedLeague = leaguesArrays[indexPath.section][indexPath.row]
-         print("\(selectedLeague.sport)" + "keeyy")
+      
        if NetworkMonitor.shared.isConnected ?? true {
              
                  let sb = UIStoryboard(name: "Core", bundle: nil)
