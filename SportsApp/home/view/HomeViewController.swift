@@ -78,7 +78,7 @@ class HomeViewController: UICollectionViewController , UICollectionViewDelegateF
 
         // Register cell classes
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.sectionInset = UIEdgeInsets(top: 84, left: 12, bottom: 0, right: 12)
+            layout.sectionInset = UIEdgeInsets(top: 80, left: 12, bottom: 0, right: 12)
             layout.minimumInteritemSpacing = 8 // spacing between the two cells
             layout.minimumLineSpacing = 32 // spacing between rows
         }
@@ -116,7 +116,7 @@ class HomeViewController: UICollectionViewController , UICollectionViewDelegateF
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.width)/2-20, height: 280)
+        return CGSize(width: (collectionView.frame.width)/2-20, height: 320)
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
        if NetworkMonitor.shared.isConnected ?? true {

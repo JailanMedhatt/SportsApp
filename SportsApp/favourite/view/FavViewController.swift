@@ -18,6 +18,10 @@ class FavViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     var presenter : FavouritePresenterProtocol!
     var leaguesArrays : [[LeagueDataModel]] = []
     var myHeaders : [String] = []
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
    
     func getLeagues(leagues: [[LeagueDataModel]]? , headers: [String]) {
         
@@ -154,8 +158,10 @@ class FavViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 
     
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+         let selectedLeague = leaguesArrays[indexPath.section][indexPath.row]
+         print("\(selectedLeague.league_key)" + "keeyy")
        if NetworkMonitor.shared.isConnected ?? true {
-             let selectedLeague = leaguesArrays[indexPath.section][indexPath.row]
+             
                  let sb = UIStoryboard(name: "Core", bundle: nil)
              
                  if let vc = sb.instantiateViewController(withIdentifier: "LeagueDetails") as? LeagueDetailsCollection {

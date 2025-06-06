@@ -25,17 +25,17 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="homeCell" id="l9C-rG-tKG" customClass="CollectionViewCell" customModule="SportsApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="181" height="190"/>
+                                <rect key="frame" x="96.666666666666671" y="0.0" width="200" height="220"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="918-Cy-MM2">
-                                    <rect key="frame" x="0.0" y="0.0" width="181" height="190"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="200" height="220"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tfy-I6-8Wb">
-                                            <rect key="frame" x="0.0" y="0.0" width="181" height="190"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="220"/>
                                         </imageView>
                                         <view opaque="NO" clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tkk-wZ-xuY">
-                                            <rect key="frame" x="0.0" y="152.33333333333334" width="181" height="37.666666666666657"/>
+                                            <rect key="frame" x="0.0" y="182.33333333333334" width="200" height="37.666666666666657"/>
                                             <color key="backgroundColor" systemColor="systemGreenColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="180" id="Og2-qm-oro"/>
@@ -48,7 +48,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9X-C4-jbE">
-                                            <rect key="frame" x="67" y="160.33333333333334" width="47" height="21.666666666666657"/>
+                                            <rect key="frame" x="76.666666666666671" y="190.33333333333334" width="47" height="21.666666666666657"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                             <color key="textColor" systemColor="groupTableViewBackgroundColor"/>
                                             <nil key="highlightedColor"/>
@@ -67,7 +67,7 @@
                                         <constraint firstItem="tkk-wZ-xuY" firstAttribute="bottom" secondItem="Tfy-I6-8Wb" secondAttribute="bottom" id="q9u-ac-QC9"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <size key="customSize" width="181" height="190"/>
+                                <size key="customSize" width="200" height="220"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="10"/>
@@ -308,7 +308,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gTf-hb-y9K">
-                                <rect key="frame" x="0.0" y="162" width="393" height="573"/>
+                                <rect key="frame" x="0.0" y="194" width="393" height="541"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LeagueCell" id="BD5-ZN-Uzk">
@@ -326,9 +326,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Jxq-Py-iHa" firstAttribute="bottom" secondItem="gTf-hb-y9K" secondAttribute="bottom" id="UKY-Qe-xRv"/>
+                            <constraint firstItem="gTf-hb-y9K" firstAttribute="top" secondItem="Jxq-Py-iHa" secondAttribute="top" constant="32" id="f9q-4E-Nq5"/>
                             <constraint firstItem="gTf-hb-y9K" firstAttribute="leading" secondItem="Jxq-Py-iHa" secondAttribute="leading" id="mDF-Ae-uTl"/>
                             <constraint firstItem="Jxq-Py-iHa" firstAttribute="trailing" secondItem="gTf-hb-y9K" secondAttribute="trailing" id="ndu-tw-Iur"/>
-                            <constraint firstItem="gTf-hb-y9K" firstAttribute="top" secondItem="Jxq-Py-iHa" secondAttribute="top" id="tvK-TZ-Orl"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Favourite" image="heart.fill" catalog="system" id="yO0-p7-anm"/>
