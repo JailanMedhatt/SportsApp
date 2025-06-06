@@ -6,8 +6,14 @@
 //
 
 import Foundation
+protocol LeagueDetailsPresenterProtocol {
+    var ref: LeagueDetailsProtocol! { get set }
+    var league: LeagueDataModel? { get set }
+    func fetchLeaguesDetails()
+}
 
-class LeagueDetailsPresenter{
+
+class LeagueDetailsPresenter : LeagueDetailsPresenterProtocol{
     
     private  var upcomingEvents: [Event]?
     private  var latestEvents: [Event] = []
@@ -49,7 +55,7 @@ class LeagueDetailsPresenter{
   private  func fetchUpcomingEvents(completion: @escaping () -> Void){
 //        NetworkManager.fetchEvents(for:league?.sport ?? "", leagueId: league?.league_key ?? 0, fromDate: Date().toString(),toDate: Date().nextYear().toString()) { [weak self] events in
       
-      NetworkManager.fetchEvents(for:league?.sport ?? "", leagueId: league?.league_key ?? 0, fromDate:Date().lastYear().toString() ,toDate:Date().toString() ) { [weak self] events in
+      NetworkManager.fetchEvents(for:league?.sport?.lowercased() ?? "", leagueId: league?.league_key ?? 0, fromDate:Date().lastYear().toString() ,toDate:Date().toString() ) { [weak self] events in
             
             self?.upcomingEvents = events 
             

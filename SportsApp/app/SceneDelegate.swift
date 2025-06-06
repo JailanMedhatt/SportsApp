@@ -16,6 +16,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+//        _ = NetworkMonitor.shared
+        NetworkMonitor.shared.onConnected = {
+            // Implicit action on connection
+            print("Try syncing with server again")
+            // Retry API calls, remove offline banners, etc.
+        }
+
+        NetworkMonitor.shared.onDisconnected = {
+            // Implicit action on disconnection
+          
+            let alert = UIAlertController(title: "No Internet Connection", message: "Please check your internet connection.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            DispatchQueue.main.async{
+                UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true)}
+            // Show alert, cache action, show banner, etc.
+        }
+
+        NetworkMonitor.shared.startMonitoring()
         let appearance = UITabBarAppearance()
             appearance.configureWithOpaqueBackground()
             appearance.backgroundColor = UIColor(hex: "#337435")
@@ -27,6 +45,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
+        NetworkMonitor.shared.stopMonitoring()
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
