@@ -19,12 +19,24 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
     var upcomingMatches : [Event]?
     var latestMatches : [Event]?
     var teams : [Team]?
-    var presenter : LeagueDetailsPresenter!
-    
+    var presenter : LeagueDetailsPresenterProtocol!
+    override func viewWillAppear(_ animated: Bool) {
+         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        let appearance = UINavigationBarAppearance()
+           appearance.configureWithOpaqueBackground()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor(hex: "#337435")]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor(hex: "#337435")]
+           navigationController?.navigationBar.standardAppearance = appearance
+           navigationController?.navigationBar.scrollEdgeAppearance = appearance
+       
+        navigationController?.navigationBar.tintColor = UIColor(hex: "#337435")
+     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+      
+        self.title = presenter.league?.league_name ?? "League Details"
         presenter.fetchLeaguesDetails()
         
         indicator = UIActivityIndicatorView(style: .large)

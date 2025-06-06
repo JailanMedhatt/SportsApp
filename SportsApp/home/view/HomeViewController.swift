@@ -8,9 +8,11 @@
 import UIKit
 
 private let reuseIdentifier = "Cell"
+import Reachability
 
 class HomeViewController: UICollectionViewController , UICollectionViewDelegateFlowLayout {
-    
+
+    // var reachability: Reachability!
     let sports : [Sport] = [Sport(img: "fff", name: "Football"), Sport(img: "cc", name: "Cricket"),
                             Sport(img: "b", name: "Basketball"),
                             Sport(img: "t", name: "Tennis")]
@@ -18,9 +20,25 @@ class HomeViewController: UICollectionViewController , UICollectionViewDelegateF
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+       // startObservingNetworkStatus()
+//        do {
+//            reachability = try Reachability()
+//            try reachability.startNotifier()
+//            
+//        } catch {
+//            
+//        }
+//        reachability.whenUnreachable = { [weak self] _ in
+//            print("Not reachable")
+////            self.isConnected = false
+//           // reachabilityChanged()
+//            
+//            self?.presentNoConnectionAlert()
+//            self?.restartReachabilityNotifier()
+//        }
             view.backgroundColor = .white // Your main view background
 
            
@@ -60,7 +78,7 @@ class HomeViewController: UICollectionViewController , UICollectionViewDelegateF
 
         // Register cell classes
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.sectionInset = UIEdgeInsets(top: 84, left: 12, bottom: 0, right: 12)
+            layout.sectionInset = UIEdgeInsets(top: 80, left: 12, bottom: 0, right: 12)
             layout.minimumInteritemSpacing = 8 // spacing between the two cells
             layout.minimumLineSpacing = 32 // spacing between rows
         }
@@ -68,6 +86,14 @@ class HomeViewController: UICollectionViewController , UICollectionViewDelegateF
 
         // Do any additional setup after loading the view.
     }
+//    private func restartReachabilityNotifier() {
+//        do {
+//            reachability.stopNotifier()
+//            try reachability.startNotifier()
+//        } catch {
+//            print("Failed to restart Reachability notifier")
+//        }
+//    }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -90,16 +116,22 @@ class HomeViewController: UICollectionViewController , UICollectionViewDelegateF
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.width)/2-20, height: 280)
+        return CGSize(width: (collectionView.frame.width)/2-20, height: 320)
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let sb = UIStoryboard(name: "Core", bundle: nil)
-    
-        if let vc = sb.instantiateViewController(withIdentifier: "Leagues") as? LeagueTableViewController {
-            let presenter = LeaguePresenter(ref:  vc, sport: sports[indexPath.item].name.lowercased())
-            vc.presenter = presenter
-            navigationController?.pushViewController(vc, animated: true)
+       if NetworkMonitor.shared.isConnected ?? true {
+            let sb = UIStoryboard(name: "Core", bundle: nil)
+        
+            if let vc = sb.instantiateViewController(withIdentifier: "Leagues") as? LeagueTableViewController {
+                let presenter = LeaguePresenter(ref:  vc, sport: sports[indexPath.item].name)
+                vc.presenter = presenter
+                navigationController?.pushViewController(vc, animated: true)
+            }
+}
+        else {
+            presentNoConnectionAlert()
         }
+      
         
     }
     // MARK: UICollectionViewDelegate
@@ -132,6 +164,7 @@ class HomeViewController: UICollectionViewController , UICollectionViewDelegateF
     
     }
     */
+
 
 }
 extension UIColor {
