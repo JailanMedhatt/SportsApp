@@ -4,17 +4,21 @@
 //
 //  Created by Jailan Medhat on 03/06/2025.
 //
+protocol FavouritePresenterProtocol {
+    func fetchLeagues()
+    func deleteLeagueToFavorite(leagueKey: Int)
+}
 
-class FavPresenter {
+
+class FavPresenter  : FavouritePresenterProtocol {
     var ref : FavouriteProtocol!
-    var basketballLeagues : [LeagueDataModel] = []
-    var footballLeagues : [LeagueDataModel] = []
-    var cricketLeagues : [LeagueDataModel] = []
-    var tennisLeagues : [LeagueDataModel] = []
-    var leaguesArrays : [[LeagueDataModel]] = []
-    var headers : [String] = []
-
-    var leagues : [LeagueDataModel] = []
+  private  var basketballLeagues : [LeagueDataModel] = []
+  private  var footballLeagues : [LeagueDataModel] = []
+  private  var cricketLeagues : [LeagueDataModel] = []
+  private  var tennisLeagues : [LeagueDataModel] = []
+  private  var leaguesArrays : [[LeagueDataModel]] = []
+  private  var headers : [String] = []
+ private var leagues : [LeagueDataModel] = []
    
     init(ref: FavouriteProtocol! ) {
         self.ref = ref
@@ -39,7 +43,7 @@ class FavPresenter {
         DatabaseManager.deleteLeague(leagueKey: leagueKey)
      
     }
-    func adjustHeadersAndArray(){
+  private  func adjustHeadersAndArray(){
         basketballLeagues = leagues.filter({$0.sport?.lowercased() == "basketball"})
         footballLeagues = leagues.filter({$0.sport?.lowercased() == "football"})
         cricketLeagues = leagues.filter({$0.sport?.lowercased() == "cricket"})
