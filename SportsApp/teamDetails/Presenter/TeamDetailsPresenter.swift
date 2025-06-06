@@ -18,7 +18,7 @@ class TeamDetailsPresenter {
     }
     
     func getTeamDetails() {
-        NetworkManager.fetchTeamDetails(for: sport ?? "", teamId: teamId ?? 0) { [weak self] result in
+        NetworkManager.shared.fetchTeamDetails(for: sport?.lowercased() ?? "", teamId: teamId ?? 0) { [weak self] result in
             self?.ref?.setTeamDetails(teamDetailsArray: result)
         }
     }

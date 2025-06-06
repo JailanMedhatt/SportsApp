@@ -11,9 +11,29 @@ import Alamofire
 protocol NetworkManagerProtocol {
     func fetchLeagues(sport: String, handler: @escaping ([LeagueDataModel]?) -> Void)
     func fetchEvents(for sport: String, leagueId: Int, fromDate: String, toDate: String, completion: @escaping ([Event]?) -> Void)
+    func fetchTeamDetails(for sport: String, teamId: Int, completion: @escaping ([TeamDetails]?) -> Void)
 }
 
 class NetworkManager: NetworkManagerProtocol {
+    func fetchTeamDetails(for sport: String, teamId: Int, completion: @escaping ([TeamDetails]?) -> Void) {
+        let urlString = baseUrl + "/\(sport)/"
+        let parameters: Parameters = [
+            "met": "Teams",
+            "APIkey": apiKey,
+            "teamId": teamId
+        ]
+
+        AF.request(urlString, parameters: parameters).responseDecodable(of: Response<TeamDetails>.self) { response in
+            switch response.result {
+            case .success(let apiResponse):
+                completion(apiResponse.result)
+            case .failure(let error):
+                print("Error fetching events: \(error)")
+                completion(nil)
+            }
+        }
+    }
+    
     
     static let shared = NetworkManager() // Singleton instance
     private init() {} // Prevent external instantiation
@@ -63,30 +83,30 @@ class NetworkManager: NetworkManagerProtocol {
                 completion(nil)
             }
         }
-<<<<<<< HEAD
-    
-    static func fetchTeamDetails(for sport: String, teamId: Int, completion: @escaping ([TeamDetails]?) -> Void) {
-             let urlString = baseUrl + "/\(sport)/"
-             let parameters: Parameters = [
-                 "met": "Teams",
-                 "APIkey": apiKey,
-                 "teamId": teamId
-             ]
 
-             AF.request(urlString, parameters: parameters).responseDecodable(of: Response<TeamDetails>.self) { response in
-                 switch response.result {
-                 case .success(let apiResponse):
-                     completion(apiResponse.result)
-                 case .failure(let error):
-                     print("Error fetching events: \(error)")
-                     completion(nil)
-                 }
-             }
-         }
+    
+//        func fetchTeamDetails(for sport: String, teamId: Int, completion: @escaping ([TeamDetails]?) -> Void) {
+//             let urlString = baseUrl + "/\(sport)/"
+//             let parameters: Parameters = [
+//                 "met": "Teams",
+//                 "APIkey": apiKey,
+//                 "teamId": teamId
+//             ]
+//
+//             AF.request(urlString, parameters: parameters).responseDecodable(of: Response<TeamDetails>.self) { response in
+//                 switch response.result {
+//                 case .success(let apiResponse):
+//                     completion(apiResponse.result)
+//                 case .failure(let error):
+//                     print("Error fetching events: \(error)")
+//                     completion(nil)
+//                 }
+//             }
+//         }
     
     
  
-=======
+
     }
->>>>>>> development
+
 }
