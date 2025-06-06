@@ -44,6 +44,8 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
         self.view.addSubview(indicator!)
         indicator?.startAnimating()
         
+        print("teeeeeeeeeeeeeeeeems\(teams?[0].teamKey)")
+        
         
 //        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
 //        collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -91,7 +93,9 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
         upcomingMatches = upcomingEvents
         latestMatches = latestEvents
         self.teams = teams
-        print("uppppppp \(upcomingMatches?.count)")
+     //   print("uppppppp \(upcomingMatches?.count)")
+        
+      //  print("teeeeeeeeeeeeeeeeems\(teams?[0].teamKey)")
 
         collectionView?.reloadData()
     
@@ -246,7 +250,7 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0: return upcomingMatches?.count ?? 0
+        case 0: return  upcomingMatches?.count ?? 1 // max(upcomingMatches?.count ?? 0, 1)
         case 1: return latestMatches?.count ?? 0
         case 2: return teams?.count ?? 0
         default: return 0
@@ -258,10 +262,16 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UpcomingMatchCell", for: indexPath) as! UpcomingMatchCell
             
+            if let upcomingMatches = upcomingMatches , !upcomingMatches.isEmpty {
+                cell.configure(event: upcomingMatches[indexPath.item])
+            }else{
+                cell.configure(event: nil)
+            }
+            
     
             
            //cell.configure(event: upcomingMatches![indexPath.item])
-            cell.configure(event: upcomingMatches![indexPath.item])
+         //   cell.configure(event: upcomingMatches![indexPath.item])
            // cell.configure(with: "liverPool")
             
             
@@ -288,6 +298,26 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
             return cell
         default:
             fatalError("Unknown section")
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 2:
+            guard let teams = teams/*, indexPath.item < teams.count*/ , presenter.league?.sport != "tennis" else { return }
+            let selectedTeam = teams[indexPath.item]
+            
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+        
+            if let vc = sb.instantiateViewController(withIdentifier: "teamDetails") as? TeamViewController {
+                
+                let presenter = TeamDetailsPresenter(ref: vc, teamId: selectedTeam.teamKey ?? 0, sport: presenter.league?.sport ?? "")
+                vc.presenter = presenter
+                navigationController?.pushViewController(vc, animated: true)
+            }
+            
+        default:
+            break
         }
     }
     
@@ -326,9 +356,9 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
         case 0:
             header.titleLabel.text = "Upcoming Matches"
         case 1:
-            header.titleLabel.text = "Latest Events"
+            header.titleLabel.text = "Recent Matches"
         case 2:
-            header.titleLabel.text = "Teams"
+            header.titleLabel.text = presenter.league?.sport == "tennis" ? "Players" : "Teams"
         default:
             header.titleLabel.text = ""
         }

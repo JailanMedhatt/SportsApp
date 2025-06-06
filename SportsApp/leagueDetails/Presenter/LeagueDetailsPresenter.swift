@@ -53,12 +53,18 @@ class LeagueDetailsPresenter : LeagueDetailsPresenterProtocol{
     
     
   private  func fetchUpcomingEvents(completion: @escaping () -> Void){
+
+       
+      
+//      NetworkManager.fetchEvents(for:league?.sport ?? "", leagueId: league?.league_key ?? 0, fromDate:Date().lastYear().toString() ,toDate:Date().toString() ) { [weak self] events in
+
 //        NetworkManager.fetchEvents(for:league?.sport ?? "", leagueId: league?.league_key ?? 0, fromDate: Date().toString(),toDate: Date().nextYear().toString()) { [weak self] events in
       print("the start date is : \(Date().lastYear())")
       print("the end date is :\(Date())")
       print(league?.sport?.lowercased() ?? "")
       print ("the kei is : \(league?.league_key ?? 0)")
       NetworkManager.shared.fetchEvents(for:league?.sport?.lowercased() ?? "", leagueId: league?.league_key ?? 0, fromDate:Date().lastYear().toString() ,toDate:Date().toString() ) { [weak self] events in
+
             
             self?.upcomingEvents = events 
           print("\(events?.count) counts of events")

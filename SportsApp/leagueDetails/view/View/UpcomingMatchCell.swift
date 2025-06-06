@@ -52,6 +52,18 @@ class UpcomingMatchCell: UICollectionViewCell {
         return view
     }()
     
+    
+    private let emptyStateLabel: UILabel = {
+           let label = UILabel()
+           label.text = "No Upcoming Matches"
+           label.textAlignment = .center
+           label.textColor = .darkGray
+           label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+           label.isHidden = true
+           label.translatesAutoresizingMaskIntoConstraints = false
+           return label
+       }()
+    
     private let vsLabel: UILabel = {
         let label = UILabel()
         label.text = "VS"
@@ -142,6 +154,7 @@ class UpcomingMatchCell: UICollectionViewCell {
     
     private func setupViews() {
         contentView.addSubview(containerView)
+        contentView.addSubview(emptyStateLabel)
         containerView.addSubview(dateLabel)
         containerView.addSubview(timeLabel)
         containerView.addSubview(vsLabel)
@@ -155,6 +168,8 @@ class UpcomingMatchCell: UICollectionViewCell {
         awayTeamStack.addArrangedSubview(awayTeamLogo)
         awayTeamStack.addArrangedSubview(awayTeamLabel)
         containerView.addSubview(awayTeamStack)
+        
+        
         
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
@@ -180,17 +195,34 @@ class UpcomingMatchCell: UICollectionViewCell {
             
             awayTeamStack.leadingAnchor.constraint(equalTo: vsLabel.trailingAnchor, constant: 32),
             awayTeamStack.centerYAnchor.constraint(equalTo: vsLabel.centerYAnchor),
-            awayTeamStack.trailingAnchor.constraint(lessThanOrEqualTo: containerView.trailingAnchor, constant: -12)
+            awayTeamStack.trailingAnchor.constraint(lessThanOrEqualTo: containerView.trailingAnchor, constant: -12),
+            
+            
+            emptyStateLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            emptyStateLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            emptyStateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            emptyStateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+     
+                  
         ])
     }
     
-    func configure(event : Event) {
-        homeTeamLogo.kf.setImage(with: URL(string: event.participant1Logo ?? "") , placeholder: UIImage(named: "f"))
-        awayTeamLogo.kf.setImage(with: URL(string: event.participant2Logo ?? "") , placeholder: UIImage(named: "f"))
-        homeTeamLabel.text = event.participant1Name
-        awayTeamLabel.text = event.participant2Name
-        dateLabel.text = event.eventDate
-        timeLabel.text = event.eventTime
+    func configure(event : Event?) {
+        if let event = event{
+            vsLabel.isHidden = false
+            emptyStateLabel.isHidden = true
+            homeTeamLogo.kf.setImage(with: URL(string: event.participant1Logo ?? "") , placeholder: UIImage(named: "f"))
+            awayTeamLogo.kf.setImage(with: URL(string: event.participant2Logo ?? "") , placeholder: UIImage(named: "f"))
+            homeTeamLabel.text = event.participant1Name
+            awayTeamLabel.text = event.participant2Name
+            dateLabel.text = event.eventDate
+            timeLabel.text = event.eventTime
+        }
+        else {
+            vsLabel.isHidden = true
+            emptyStateLabel.isHidden = false
+        }
+       
     }
     
 //    func configure(with title: String) {
