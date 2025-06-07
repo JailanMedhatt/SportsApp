@@ -8,7 +8,18 @@
 import UIKit
 import Kingfisher
 
-class LeagueTableViewController: UITableViewController, LeagueProtocol {
+class LeagueTableViewController: UITableViewController, LeagueProtocol , UISearchResultsUpdating{
+  
+    
+    let searchController = UISearchController(searchResultsController: nil)
+    var filteredLeagues : [LeagueDataModel] = []
+    
+    var isSearching: Bool {
+        return !(searchController.searchBar.text?.isEmpty ?? true)
+    }
+    
+    
+    
     var indicator : UIActivityIndicatorView?
     var leagues : [LeagueDataModel] = []
     var presenter : LeaguePresenterProtocol!
@@ -27,6 +38,8 @@ class LeagueTableViewController: UITableViewController, LeagueProtocol {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupSearchController()
       
         self.title = "\(presenter.sport ?? "") Leagues"
         presenter.fetchLeagues()
@@ -57,6 +70,28 @@ class LeagueTableViewController: UITableViewController, LeagueProtocol {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    func setupSearchController() {
+        searchController.searchResultsUpdater = self
+       searchController.obscuresBackgroundDuringPresentation = false
+       //searchController.automaticallyShowsSearchResultsController = true
+        searchController.searchBar.placeholder = "Search Leagues"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text?.lowercased() else { return }
+        filteredLeagues = leagues.filter { league in
+            return league.league_name?.lowercased().contains(searchText) ?? false
+        }
+
+        tableView.reloadData()
+
+               
+    }
+    
+    
     @objc func handleBack() {
         navigationController?.popViewController(animated: true)
     }
@@ -81,16 +116,20 @@ class LeagueTableViewController: UITableViewController, LeagueProtocol {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return leagues.count
+        return isSearching ? filteredLeagues.count : leagues.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LeagueCell", for: indexPath)
         as! LeagueTableViewCell
-        cell.leagueImage.kf.setImage(with: URL(string: leagues[indexPath.item].league_logo ?? "")  ,placeholder: UIImage(named: "f"))
-        cell.leagueLabel.text = leagues[indexPath.row].league_name
-        let isLiked = presenter.isLeagueinfav(leagueKey: leagues[indexPath.row].league_key!)
+//        cell.leagueImage.kf.setImage(with: URL(string: leagues[indexPath.item].league_logo ?? "")  ,placeholder: UIImage(named: "f"))
+        let league = isSearching ? filteredLeagues[indexPath.item] : leagues[indexPath.item]
+        
+        cell.leagueImage.kf.setImage(with: URL(string: league.league_logo ?? "")  ,placeholder: UIImage(named: "f"))
+       // cell.leagueLabel.text = leagues[indexPath.row].league_name
+        cell.leagueLabel.text = league.league_name
+        let isLiked = presenter.isLeagueinfav(leagueKey: league.league_key!)
         if isLiked {
             cell.isLiked = true
         }
@@ -98,7 +137,7 @@ class LeagueTableViewController: UITableViewController, LeagueProtocol {
         }
         cell.closure = { [weak self] in
             
-            let league = self?.leagues[indexPath.row] ?? LeagueDataModel(league_key: 0, league_name: "", league_logo: "", sport: "")
+           // let league = self?.leagues[indexPath.row] ?? LeagueDataModel(league_key: 0, league_name: "", league_logo: "", sport: "")
             league.sport = self?.presenter.sport
             if(!isLiked){
                 self?.presenter.addLeagueToFavorite(league: league)
@@ -133,7 +172,8 @@ class LeagueTableViewController: UITableViewController, LeagueProtocol {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if NetworkMonitor.shared.isConnected ?? true{
-            let selectedLeague = leagues[indexPath.row]
+           // let selectedLeague = leagues[indexPath.row]
+            let selectedLeague = isSearching ? filteredLeagues[indexPath.row] : leagues[indexPath.row]
             selectedLeague.sport = presenter?.sport?.lowercased() ?? ""
             
             let sb = UIStoryboard(name: "Core", bundle: nil)
