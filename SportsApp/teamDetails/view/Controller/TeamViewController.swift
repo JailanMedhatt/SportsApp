@@ -197,7 +197,11 @@ class TeamViewController: UICollectionViewController, TeamDeatilsProtocol {
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "playerCell", for: indexPath) as! PlayerCollectionViewCell
            // cell.img.image = UIImage(named: images[indexPath.item])
-            cell.img.kf.setImage(with: URL(string: teamDetails.players?[indexPath.item].playerImage ?? "") , placeholder: UIImage(named: "f"))
+            
+            print("this is imaaaaaage of \(teamDetails.players?[indexPath.item].playerName) : \(teamDetails.players?[indexPath.item].playerImage)" )
+            
+            
+            cell.img.kf.setImage(with: URL(string: teamDetails.players?[indexPath.item].playerImage ?? "") , placeholder: UIImage(named: "player"))
             cell.name.text = teamDetails.players?[indexPath.item].playerName
             cell.position.text = teamDetails.players?[indexPath.item].playerType
             cell.layer.borderWidth = 2
@@ -221,7 +225,7 @@ class TeamViewController: UICollectionViewController, TeamDeatilsProtocol {
             
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "teamCell", for: indexPath) as! TeamViewControllerCollectionViewCell
-            cell.img.kf.setImage(with: URL(string: teamDetails.teamLogo ?? "") , placeholder: UIImage(named: "f"))
+            cell.img.kf.setImage(with: URL(string: teamDetails.teamLogo ?? "") , placeholder: UIImage(named: "p"))
             cell.myTitle.text = teamDetails.teamName
         
             return cell

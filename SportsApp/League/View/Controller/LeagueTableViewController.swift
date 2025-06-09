@@ -126,15 +126,11 @@ class LeagueTableViewController: UITableViewController, LeagueProtocol , UISearc
 //        cell.leagueImage.kf.setImage(with: URL(string: leagues[indexPath.item].league_logo ?? "")  ,placeholder: UIImage(named: "f"))
         let league = isSearching ? filteredLeagues[indexPath.item] : leagues[indexPath.item]
         
-        cell.leagueImage.kf.setImage(with: URL(string: league.league_logo ?? "")  ,placeholder: UIImage(named: "f"))
+        cell.leagueImage.kf.setImage(with: URL(string: league.league_logo ?? "")  ,placeholder: UIImage(named: "league"))
        // cell.leagueLabel.text = leagues[indexPath.row].league_name
         cell.leagueLabel.text = league.league_name
         let isLiked = presenter.isLeagueinfav(leagueKey: league.league_key!)
-        if isLiked {
-            cell.isLiked = true
-        }
-        else{cell.isLiked = false
-        }
+        cell.isLiked = isLiked
         cell.closure = { [weak self] in
             
            // let league = self?.leagues[indexPath.row] ?? LeagueDataModel(league_key: 0, league_name: "", league_logo: "", sport: "")

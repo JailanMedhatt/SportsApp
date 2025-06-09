@@ -16,8 +16,8 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
     
     
     var indicator : UIActivityIndicatorView?
-    var upcomingMatches : [Event]?
-    var latestMatches : [Event]?
+    var upcomingMatches : [Event]? = []
+    var latestMatches : [Event]? = []
     var teams : [Team]?
     var presenter : LeagueDetailsPresenterProtocol!
     override func viewWillAppear(_ animated: Bool) {
@@ -26,7 +26,7 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
         let appearance = UINavigationBarAppearance()
            appearance.configureWithOpaqueBackground()
         appearance.titleTextAttributes = [.foregroundColor: UIColor(hex: "#337435")]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor(hex: "#337435")]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor(hex: "#337435")] 
            navigationController?.navigationBar.standardAppearance = appearance
            navigationController?.navigationBar.scrollEdgeAppearance = appearance
        
@@ -251,7 +251,7 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0: return  upcomingMatches?.count ?? 1 // max(upcomingMatches?.count ?? 0, 1)
-        case 1: return latestMatches?.count ?? 0
+        case 1: return latestMatches?.count ?? 1
         case 2: return teams?.count ?? 0
         default: return 0
         }
@@ -283,8 +283,14 @@ class LeagueDetailsCollection: UICollectionViewController,LeagueDetailsProtocol 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LatestEventCell", for: indexPath) as! LatestEventCell
             // configure cell
             
+            if let latestMatches = latestMatches , !latestMatches.isEmpty {
+                cell.configure(event: latestMatches[indexPath.item])
+            }else{
+                cell.configure(event: nil)
+            }
             
-            cell.configure(event: latestMatches![indexPath.item])
+            
+           // cell.configure(event: latestMatches![indexPath.item])
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TeamCell", for: indexPath) as! TeamCell

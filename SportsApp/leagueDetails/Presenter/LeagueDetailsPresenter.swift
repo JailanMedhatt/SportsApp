@@ -16,7 +16,7 @@ protocol LeagueDetailsPresenterProtocol {
 class LeagueDetailsPresenter : LeagueDetailsPresenterProtocol{
     
     private  var upcomingEvents: [Event]?
-    private  var latestEvents: [Event] = []
+    private  var latestEvents: [Event]?
     private var teams: [Team] = []
     
     var ref : LeagueDetailsProtocol!
@@ -64,9 +64,12 @@ class LeagueDetailsPresenter : LeagueDetailsPresenterProtocol{
       print(league?.sport?.lowercased() ?? "")
       print ("the kei is : \(league?.league_key ?? 0)")
       NetworkManager.shared.fetchEvents(for:league?.sport?.lowercased() ?? "", leagueId: league?.league_key ?? 0, fromDate: Date().toString(),toDate: Date().nextYear().toString() ) { [weak self] events in
+          
+      
+//      NetworkManager.shared.fetchEvents(for:league?.sport?.lowercased() ?? "", leagueId: league?.league_key ?? 0, fromDate:Date().lastYear().toString() ,toDate:Date().toString() ) { [weak self] events in 
 
             
-            self?.upcomingEvents = events 
+          self?.upcomingEvents = events
           print("\(events?.count) counts of events")
             completion()
             
@@ -77,7 +80,10 @@ class LeagueDetailsPresenter : LeagueDetailsPresenterProtocol{
         
         NetworkManager.shared.fetchEvents(for:league?.sport?.lowercased() ?? "", leagueId: league?.league_key ?? 0, fromDate:Date().lastYear().toString() ,toDate:Date().toString() ) { [weak self] events in
             
-            self?.latestEvents = events ?? []
+            
+            
+            
+            self?.latestEvents = events
             
             completion()
             
@@ -86,7 +92,7 @@ class LeagueDetailsPresenter : LeagueDetailsPresenterProtocol{
     
     private func extractTeams(/*from events: [Event]*/) {
         var allTeams = Set<Team>()
-        let events = upcomingEvents ?? [] + latestEvents
+        let events = upcomingEvents ?? [] + (latestEvents ?? [])
         
         for event in events {
             let participant = Team(teamKey: event.participant1Key,

@@ -43,9 +43,9 @@ class UpcomingMatchCell: UICollectionViewCell {
         
         view.configureGradient(
             topColor: UIColor(hex: "#A3D9B1"), // Very light green
-            bottomColor: UIColor(hex: "#379C67") // Your original color
+            bottomColor: UIColor(hex: "#337435") // Your original color
         )
-        
+        337435   /// 379C67
        
         
         view.translatesAutoresizingMaskIntoConstraints = false
