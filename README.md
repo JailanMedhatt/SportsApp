@@ -1,4 +1,4 @@
-تمام جدًا! هنضيف في قسم "Technologies Used":
+
 
 
 # Sports App
@@ -17,7 +17,7 @@ Sports App is an iOS application developed using Swift. The app provides users w
 * Custom theming system applied across all screens.
 * Displays network connection status, and handles cases when the internet is disconnected.
 * Prevents access to online content when offline with proper handling.
-* Supports image display** (e.g. team logos, player images).
+* Supports image display (e.g. team logos, player images).
 * Unit testing implemented for API-related functions where appropriate.
 
 
@@ -34,6 +34,3 @@ Sports App is an iOS application developed using Swift. The app provides users w
 * Image display
 * Unit testing (for API logic)
 
-
-
-جاهز تمامًا للاستخدام في GitHub أو Xcode project. لو حابب أبعته كملف `.md` قولي فورًا وأنا أجهزه ليك.
