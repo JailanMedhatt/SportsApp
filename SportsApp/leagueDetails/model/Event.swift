@@ -26,6 +26,8 @@ struct Event: Decodable {
     let secondPlayer: String?
     let secondPlayerKey: Int?
     let secondPlayerLogo: String?
+    let eventHomeTeamLogo: String?
+    let eventAwayTeamLogo: String?
     
     enum CodingKeys: String, CodingKey {
         case eventDate = "event_date"
@@ -40,14 +42,16 @@ struct Event: Decodable {
         case awayTeam = "event_away_team"
         case awayTeamKey = "away_team_key"
         case awayTeamLogo = "away_team_logo"
+        case eventHomeTeamLogo = "event_home_team_logo"
+        case eventAwayTeamLogo = "event_away_team_logo"
         
        
         case firstPlayer = "event_first_player"
         case firstPlayerKey = "first_player_key"
-        case firstPlayerLogo = "first_player_logo"
+        case firstPlayerLogo = "event_first_player_logo"
         case secondPlayer = "event_second_player"
         case secondPlayerKey = "second_player_key"
-        case secondPlayerLogo = "second_player_logo"
+        case secondPlayerLogo = "event_second_player_logo"
     }
 
     
@@ -56,7 +60,7 @@ struct Event: Decodable {
         }
         
         var participant1Logo: String? {
-            return homeTeamLogo ?? firstPlayerLogo
+            return homeTeamLogo ?? firstPlayerLogo ?? eventHomeTeamLogo
         }
         
         var participant1Key: Int? {
@@ -68,7 +72,7 @@ struct Event: Decodable {
         }
         
         var participant2Logo: String? {
-            return awayTeamLogo ?? secondPlayerLogo
+            return awayTeamLogo ?? secondPlayerLogo ?? eventAwayTeamLogo
         }
         
         var participant2Key: Int? {
