@@ -19,7 +19,6 @@ class NetworkMonitor {
             
             let newStatus = (path.status == .satisfied)
             
-            // Only proceed if status changed
          if self.isConnected != newStatus {
                 self.isConnected = newStatus
                 
@@ -38,6 +37,6 @@ class NetworkMonitor {
 
     func stopMonitoring() {
         monitor.cancel()
-        isConnected = nil // Reset to unknown state when stopped
+        isConnected = nil 
     }
 }

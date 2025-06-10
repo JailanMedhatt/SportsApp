@@ -47,5 +47,18 @@ final class SportsAppTests: XCTestCase {
         }
         waitForExpectations(timeout: 5)
     }
+  func  testFetchTeamDetails(){
+      let expectation = expectation(description: "Fetch Team Details")
+      networkManager.fetchTeamDetails(for : "football",teamId: 1){ (result) in
+          if(result == nil){
+              XCTFail("Nothing returned")
+          }
+          else{
+              XCTAssertNotNil(result)
+          }
+          expectation.fulfill()
+      }
+      waitForExpectations(timeout: 5)
+  }
 
 }

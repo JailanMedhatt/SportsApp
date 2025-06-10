@@ -13,10 +13,10 @@ class LatestEventCell: UICollectionViewCell {
     
     private let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         view.layer.cornerRadius = 12
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor(hex: "#379C67").cgColor
+        view.layer.borderColor = UIColor(hex: "#337435").cgColor
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 0.1
         view.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -24,6 +24,17 @@ class LatestEventCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    private let emptyStateLabel: UILabel = {
+           let label = UILabel()
+           label.text = "No Recent Matches"
+           label.textAlignment = .center
+           label.textColor = .darkGray
+           label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+           label.isHidden = true
+           label.translatesAutoresizingMaskIntoConstraints = false
+           return label
+       }()
     
     private let scoreLabel: UILabel = {
         let label = UILabel()
@@ -132,17 +143,18 @@ class LatestEventCell: UICollectionViewCell {
     
     private func setupViews() {
         contentView.addSubview(containerView)
+        contentView.addSubview(emptyStateLabel)
         containerView.addSubview(dateLabel)
         containerView.addSubview(timeLabel)
         containerView.addSubview(scoreLabel)
         containerView.addSubview(vsLabel)
         
-        // Setup home team stack
+       
         homeTeamStack.addArrangedSubview(homeTeamLogo)
         homeTeamStack.addArrangedSubview(homeTeamLabel)
         containerView.addSubview(homeTeamStack)
         
-        // Setup away team stack
+       
         awayTeamStack.addArrangedSubview(awayTeamLogo)
         awayTeamStack.addArrangedSubview(awayTeamLabel)
         containerView.addSubview(awayTeamStack)
@@ -173,45 +185,35 @@ class LatestEventCell: UICollectionViewCell {
             
             awayTeamStack.leadingAnchor.constraint(equalTo: scoreStack.trailingAnchor, constant: 48),
             awayTeamStack.centerYAnchor.constraint(equalTo: scoreStack.centerYAnchor),
-            awayTeamStack.trailingAnchor.constraint(lessThanOrEqualTo: containerView.trailingAnchor, constant: -12)
+            awayTeamStack.trailingAnchor.constraint(lessThanOrEqualTo: containerView.trailingAnchor, constant: -12),
+            
+            
+            emptyStateLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            emptyStateLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            emptyStateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            emptyStateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
     }
     
-//    func configure(with match: Match) {
-//        homeTeamLabel.text = match.homeTeam
-//        awayTeamLabel.text = match.awayTeam
-//        dateLabel.text = match.date
-//        timeLabel.text = match.time
-//        scoreLabel.text = match.score
-//        
-//        // Set team logos (replace with your image loading logic)
-//        homeTeamLogo.image = UIImage(named: match.homeTeamLogo)
-//        awayTeamLogo.image = UIImage(named: match.awayTeamLogo)
-//    }
     
-    func configure(event : Event) {
-        
-//        if let homeLogoURLString = event.participant1Logo, let homeLogoURL = URL(string: homeLogoURLString) {
-//            homeTeamLogo.kf.setImage(with: homeLogoURL, placeholder: UIImage(named: "f"))
-//        } else {
-//            homeTeamLogo.image = UIImage(named: "f") // fallback image
-//        }
-//
-//        // Load away team logo
-//        if let awayLogoURLString = event.participant2Logo, let awayLogoURL = URL(string: awayLogoURLString) {
-//            awayTeamLogo.kf.setImage(with: awayLogoURL, placeholder: UIImage(named: "t"))
-//        } else {
-//            awayTeamLogo.image = UIImage(named: "t")
-//        }
+    func configure(event : Event?) {
+
+        if let event = event {
+            vsLabel.isHidden = false
+            emptyStateLabel.isHidden = true
+            homeTeamLogo.kf.setImage(with: URL(string: event.participant1Logo ?? "") , placeholder: UIImage(named: "football"))
+            awayTeamLogo.kf.setImage(with: URL(string: event.participant2Logo ?? "") , placeholder: UIImage(named: "football"))
+            homeTeamLabel.text = event.participant1Name
+            awayTeamLabel.text = event.participant2Name
+            dateLabel.text = event.eventDate
+            timeLabel.text = event.eventTime
+            scoreLabel.text = event.eventFinalResult
+            
+        }else{
+            vsLabel.isHidden = true
+            emptyStateLabel.isHidden = false
+        }
               
-        homeTeamLogo.kf.setImage(with: URL(string: event.participant1Logo ?? "") , placeholder: UIImage(named: "f"))
-        awayTeamLogo.kf.setImage(with: URL(string: event.participant2Logo ?? "") , placeholder: UIImage(named: "f"))
-        homeTeamLabel.text = event.participant1Name
-        awayTeamLabel.text = event.participant2Name
-        dateLabel.text = event.eventDate
-        timeLabel.text = event.eventTime
-        scoreLabel.text = event.eventFinalResult
-       
     
     }
     

@@ -122,7 +122,7 @@ class FavViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         as! LeagueTableViewCell
         cell.heartButton.isHidden = true
         cell.leagueLabel.text = leaguesArrays[indexPath.section][indexPath.row].league_name
-        cell.leagueImage.kf.setImage(with: URL(string: leaguesArrays[indexPath.section][indexPath.row].league_logo ?? "")  ,placeholder: UIImage(named: "f"))
+        cell.leagueImage.kf.setImage(with: URL(string: leaguesArrays[indexPath.section][indexPath.row].league_logo ?? "")  ,placeholder: UIImage(named: "league"))
 
         return cell
     }

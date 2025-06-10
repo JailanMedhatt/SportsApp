@@ -6,10 +6,17 @@
 //
 
 import UIKit
+import Kingfisher
 
 private let reuseIdentifier = "Cell"
 
-class TeamViewController: UICollectionViewController {
+class TeamViewController: UICollectionViewController, TeamDeatilsProtocol {
+ 
+    
+    var indicator : UIActivityIndicatorView?
+    var teamDetailsList : [TeamDetails]?
+    var presenter : TeamDetailsPresenter!
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
@@ -17,7 +24,15 @@ class TeamViewController: UICollectionViewController {
 
 
     override func viewDidLoad() {
+    
         super.viewDidLoad()
+        
+        presenter.getTeamDetails()
+        
+        indicator = UIActivityIndicatorView(style: .large)
+        indicator?.center = self.view.center
+        self.view.addSubview(indicator!)
+        indicator?.startAnimating()
         
          let appBar = UIView()
          appBar.backgroundColor =  UIColor(hex: "#337435")
@@ -35,7 +50,6 @@ class TeamViewController: UICollectionViewController {
              appBar.heightAnchor.constraint(equalToConstant: 105) // Or use view.safeAreaLayoutGuide
          ])
          
-         // Title label
         navigationController?.navigationBar.tintColor = .white
          let titleLabel = UILabel()
          titleLabel.text = "Details"
@@ -82,21 +96,32 @@ class TeamViewController: UICollectionViewController {
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
       
+
     }
     @objc func handleBack() {
         navigationController?.popViewController(animated: true)
     }
+    
+    
+    func setTeamDetails(teamDetailsArray: [TeamDetails]?) {
+        indicator?.stopAnimating()
+        teamDetailsList = teamDetailsArray
+        
+        collectionView.reloadData()
+    
+    }
 
+    
 
     func teamSection()-> NSCollectionLayoutSection {
          let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
          let item = NSCollectionLayoutItem(layoutSize: itemSize)
-         let groupSize = NSCollectionLayoutSize(widthDimension:        .fractionalWidth(0.7), heightDimension: .absolute(180))
+        let groupSize = NSCollectionLayoutSize(widthDimension:        .fractionalWidth(1.0), heightDimension: .absolute(180))
          let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0
-             , bottom: 0, trailing: 15)
+             , bottom: 0, trailing: 0)
          let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 64, leading: 86
+        section.contentInsets = NSDirectionalEdgeInsets(top: 64, leading: 0
         , bottom: 0, trailing: 0)
          return section
     }
@@ -132,8 +157,8 @@ class TeamViewController: UICollectionViewController {
             , bottom: 8, trailing: 0)
             
             let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 8
-            , bottom: 16, trailing: 15)
+            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 16
+            , bottom: 16, trailing: 16)
             
             return section
         }
@@ -153,38 +178,51 @@ class TeamViewController: UICollectionViewController {
         case 1:
             return 1
         default:
-            return 10
+            return teamDetailsList?.first?.players?.count ?? 0
         }
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+       // if let teamDetails = teamDetailsList
+        guard let teamDetails = teamDetailsList?.first else {
+               // Return empty cells if no team details available
+               return collectionView.dequeueReusableCell(withReuseIdentifier: "teamCell", for: indexPath)
+           }
+        
+        
         switch indexPath.section {
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "playerCell", for: indexPath) as! PlayerCollectionViewCell
-           // cell.img.image = UIImage(named: images[indexPath.item])
-            cell.name.text = "John Doe"
-            cell.position.text="Forward"
+            
+            print("this is imaaaaaage of \(teamDetails.players?[indexPath.item].playerName) : \(teamDetails.players?[indexPath.item].playerImage)" )
+            
+            
+            cell.img.kf.setImage(with: URL(string: teamDetails.players?[indexPath.item].playerImage ?? "") , placeholder: UIImage(named: "player"))
+            cell.name.text = teamDetails.players?[indexPath.item].playerName
+            cell.position.text = teamDetails.players?[indexPath.item].playerType
             cell.layer.borderWidth = 2
             cell.layer.borderColor =  UIColor(hex: "#337435").cgColor
 //               cell.layer.cornerRadius = 8
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "coachCell", for: indexPath) as! CoachCollectionViewCell
-          //  cell.img.image = UIImage(named: iconItems[indexPath.item].img)
-            cell.name.text="Alba Doeeee"
+            cell.name.text = teamDetails.coaches?.first?.coachName ?? "unknown"
             cell.myLabel.textColor = UIColor(hex: "#337435")
             return cell
             
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "teamCell", for: indexPath) as! TeamViewControllerCollectionViewCell
-            cell.myTitle.text="Team Name"
+            cell.img.kf.setImage(with: URL(string: teamDetails.teamLogo ?? "") , placeholder: UIImage(named: "football"))
+            cell.myTitle.text = teamDetails.teamName
         
             return cell
             
             
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "teamCell", for: indexPath) as! TeamViewControllerCollectionViewCell
-            cell.myTitle.text="Team Name"
+            cell.img.kf.setImage(with: URL(string: teamDetails.teamLogo ?? "") , placeholder: UIImage(named: "football"))
+            cell.myTitle.text = teamDetails.teamName
         
             return cell
         }

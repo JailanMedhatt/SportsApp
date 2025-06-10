@@ -31,19 +31,20 @@ class LeagueTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         updateHeartIcon()
-        leagueImage.layer.cornerRadius = leagueImage.frame.size.width / 2
+       leagueImage.layer.cornerRadius = leagueImage.frame.size.width / 2
            leagueImage.clipsToBounds = true
         containerView.layer.cornerRadius = 12
-        containerView.layer.borderWidth = 3
+        containerView.layer.borderWidth = 2
+        containerView.layer.borderColor = UIColor(hex: "#337435").cgColor
        // containerView.layer.borderColor = UIColor(named: "CustomGreen")?.cgColor
         containerView.layer.masksToBounds = true
       //  containerView.layer.borderColor = UIColor.green.
-        containerView.layer.borderColor = UIColor(
-            red: 55/255.0,
-            green: 156/255.0,
-            blue: 103/255.0,
-            alpha: 1.0
-        ).cgColor
+//        containerView.layer.borderColor = UIColor(
+//            red: 55/255.0,
+//            green: 156/255.0,
+//            blue: 103/255.0,
+//            alpha: 1.0
+//        ).cgColor
 
 
        // self.backgroundColor = .clear

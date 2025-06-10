@@ -6,16 +6,13 @@
 //
 
 struct Event: Decodable {
-    // Common fields
-    let eventKey: Int?
+    
     let eventDate: String?
     let eventTime: String?
     let eventFinalResult: String?
     let leagueName: String?
     let leagueKey: Int?
-    let leagueLogo: String?
     
-    // Team sport fields
     let homeTeam: String?
     let homeTeamKey: Int?
     let homeTeamLogo: String?
@@ -23,7 +20,6 @@ struct Event: Decodable {
     let awayTeamKey: Int?
     let awayTeamLogo: String?
     
-    // Individual sport fields (tennis)
     let firstPlayer: String?
     let firstPlayerKey: Int?
     let firstPlayerLogo: String?
@@ -32,15 +28,12 @@ struct Event: Decodable {
     let secondPlayerLogo: String?
     
     enum CodingKeys: String, CodingKey {
-        case eventKey = "event_key"
         case eventDate = "event_date"
         case eventTime = "event_time"
         case eventFinalResult = "event_final_result"
         case leagueName = "league_name"
         case leagueKey = "league_key"
-        case leagueLogo = "league_logo"
-        
-        // Team sports
+
         case homeTeam = "event_home_team"
         case homeTeamKey = "home_team_key"
         case homeTeamLogo = "home_team_logo"
@@ -48,7 +41,7 @@ struct Event: Decodable {
         case awayTeamKey = "away_team_key"
         case awayTeamLogo = "away_team_logo"
         
-        // Individual sports
+       
         case firstPlayer = "event_first_player"
         case firstPlayerKey = "first_player_key"
         case firstPlayerLogo = "first_player_logo"

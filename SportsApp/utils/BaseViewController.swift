@@ -4,7 +4,6 @@ extension UIViewController {
     
     func presentNoConnectionAlert() {
         guard presentedViewController == nil else { return }
-
         let alert = UIAlertController(
             title: "No Internet Connection",
             message: "Please check your internet settings.",
