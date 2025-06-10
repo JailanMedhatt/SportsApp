@@ -198,17 +198,17 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="teamCell" id="mUg-wE-2Eo" customClass="TeamViewControllerCollectionViewCell" customModule="SportsApp" customModuleProvider="target">
-                                <rect key="frame" x="62" y="255" width="269" height="203"/>
+                                <rect key="frame" x="38" y="255" width="317" height="217"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="fCI-e0-Psb">
-                                    <rect key="frame" x="0.0" y="0.0" width="269" height="203"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="317" height="217"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="a" translatesAutoresizingMaskIntoConstraints="NO" id="g8O-TX-3Wn">
-                                            <rect key="frame" x="0.0" y="0.0" width="269" height="147"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="317" height="161"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Al-Ahly" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jbp-Rb-B8L">
-                                            <rect key="frame" x="99.333333333333343" y="165" width="70.333333333333343" height="24"/>
+                                            <rect key="frame" x="123.33333333333334" y="179" width="70.333333333333343" height="24"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -220,10 +220,11 @@
                                         <constraint firstAttribute="trailing" secondItem="g8O-TX-3Wn" secondAttribute="trailing" id="5xA-pN-wQG"/>
                                         <constraint firstItem="g8O-TX-3Wn" firstAttribute="top" secondItem="fCI-e0-Psb" secondAttribute="top" id="Ftz-YT-kdA"/>
                                         <constraint firstItem="g8O-TX-3Wn" firstAttribute="leading" secondItem="fCI-e0-Psb" secondAttribute="leading" id="WxT-bM-mxT"/>
+                                        <constraint firstItem="g8O-TX-3Wn" firstAttribute="centerX" secondItem="fCI-e0-Psb" secondAttribute="centerX" id="oU4-Bd-FZa"/>
                                         <constraint firstItem="Jbp-Rb-B8L" firstAttribute="centerX" secondItem="fCI-e0-Psb" secondAttribute="centerX" id="xxQ-Ck-VuP"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <size key="customSize" width="269" height="203"/>
+                                <size key="customSize" width="317" height="217"/>
                                 <connections>
                                     <outlet property="img" destination="g8O-TX-3Wn" id="geJ-hH-3s9"/>
                                     <outlet property="myTitle" destination="Jbp-Rb-B8L" id="JJb-Xt-YSQ"/>
@@ -374,10 +375,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tableBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

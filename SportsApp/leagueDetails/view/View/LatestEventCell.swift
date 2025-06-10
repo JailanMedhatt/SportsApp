@@ -195,37 +195,14 @@ class LatestEventCell: UICollectionViewCell {
         ])
     }
     
-//    func configure(with match: Match) {
-//        homeTeamLabel.text = match.homeTeam
-//        awayTeamLabel.text = match.awayTeam
-//        dateLabel.text = match.date
-//        timeLabel.text = match.time
-//        scoreLabel.text = match.score
-//        
-//        // Set team logos (replace with your image loading logic)
-//        homeTeamLogo.image = UIImage(named: match.homeTeamLogo)
-//        awayTeamLogo.image = UIImage(named: match.awayTeamLogo)
-//    }
     
     func configure(event : Event?) {
-        
-//        if let homeLogoURLString = event.participant1Logo, let homeLogoURL = URL(string: homeLogoURLString) {
-//            homeTeamLogo.kf.setImage(with: homeLogoURL, placeholder: UIImage(named: "f"))
-//        } else {
-//            homeTeamLogo.image = UIImage(named: "f") // fallback image
-//        }
-//
-//        // Load away team logo
-//        if let awayLogoURLString = event.participant2Logo, let awayLogoURL = URL(string: awayLogoURLString) {
-//            awayTeamLogo.kf.setImage(with: awayLogoURL, placeholder: UIImage(named: "t"))
-//        } else {
-//            awayTeamLogo.image = UIImage(named: "t")
-//        }
+
         if let event = event {
             vsLabel.isHidden = false
             emptyStateLabel.isHidden = true
-            homeTeamLogo.kf.setImage(with: URL(string: event.participant1Logo ?? "") , placeholder: UIImage(named: "f"))
-            awayTeamLogo.kf.setImage(with: URL(string: event.participant2Logo ?? "") , placeholder: UIImage(named: "f"))
+            homeTeamLogo.kf.setImage(with: URL(string: event.participant1Logo ?? "") , placeholder: UIImage(named: "football"))
+            awayTeamLogo.kf.setImage(with: URL(string: event.participant2Logo ?? "") , placeholder: UIImage(named: "football"))
             homeTeamLabel.text = event.participant1Name
             awayTeamLabel.text = event.participant2Name
             dateLabel.text = event.eventDate
@@ -237,8 +214,6 @@ class LatestEventCell: UICollectionViewCell {
             emptyStateLabel.isHidden = false
         }
               
-       
-       
     
     }
     

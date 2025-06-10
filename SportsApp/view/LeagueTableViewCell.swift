@@ -31,7 +31,7 @@ class LeagueTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         updateHeartIcon()
-       // leagueImage.layer.cornerRadius = leagueImage.frame.size.width / 2
+       leagueImage.layer.cornerRadius = leagueImage.frame.size.width / 2
            leagueImage.clipsToBounds = true
         containerView.layer.cornerRadius = 12
         containerView.layer.borderWidth = 2

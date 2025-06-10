@@ -50,20 +50,7 @@ class LeagueTableViewController: UITableViewController, LeagueProtocol , UISearc
         tableView.separatorStyle = .none
         let nib = UINib(nibName: "LeagueTableViewCell", bundle: nil)  /// bundle  /// name of the cell class
         tableView.register(nib, forCellReuseIdentifier: "LeagueCell")
-      //  NetworkManager.fetchLeagues(sport: "football")
-       // self.title = "Leagues"
-        
-//        let titleLabel = UILabel()
-//          titleLabel.text = "Leagues"
-//          titleLabel.font = UIFont.boldSystemFont(ofSize: 24)
-//          titleLabel.textAlignment = .center
-//          titleLabel.backgroundColor = .systemGroupedBackground
-//          titleLabel.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 60)
-//
-//          tableView.tableHeaderView = titleLabel
-        
-       
-
+    
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -123,17 +110,14 @@ class LeagueTableViewController: UITableViewController, LeagueProtocol , UISearc
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LeagueCell", for: indexPath)
         as! LeagueTableViewCell
-//        cell.leagueImage.kf.setImage(with: URL(string: leagues[indexPath.item].league_logo ?? "")  ,placeholder: UIImage(named: "f"))
         let league = isSearching ? filteredLeagues[indexPath.item] : leagues[indexPath.item]
         
         cell.leagueImage.kf.setImage(with: URL(string: league.league_logo ?? "")  ,placeholder: UIImage(named: "league"))
-       // cell.leagueLabel.text = leagues[indexPath.row].league_name
+      
         cell.leagueLabel.text = league.league_name
         let isLiked = presenter.isLeagueinfav(leagueKey: league.league_key!)
         cell.isLiked = isLiked
         cell.closure = { [weak self] in
-            
-           // let league = self?.leagues[indexPath.row] ?? LeagueDataModel(league_key: 0, league_name: "", league_logo: "", sport: "")
             league.sport = self?.presenter.sport
             if(!isLiked){
                 self?.presenter.addLeagueToFavorite(league: league)
@@ -168,7 +152,6 @@ class LeagueTableViewController: UITableViewController, LeagueProtocol , UISearc
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if NetworkMonitor.shared.isConnected ?? true{
-           // let selectedLeague = leagues[indexPath.row]
             let selectedLeague = isSearching ? filteredLeagues[indexPath.row] : leagues[indexPath.row]
             selectedLeague.sport = presenter?.sport?.lowercased() ?? ""
             

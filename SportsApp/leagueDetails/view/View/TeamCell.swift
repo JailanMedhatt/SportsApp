@@ -15,13 +15,6 @@ class TeamCell: UICollectionViewCell {
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
-       // view.layer.cornerRadius = 12
-     //  view.layer.borderWidth = 1
-     //  view.layer.borderColor = UIColor(hex: "#379C67").cgColor
-//        view.layer.shadowColor = UIColor.black.cgColor
-//        view.layer.shadowOpacity = 0.1
-//        view.layer.shadowOffset = CGSize(width: 0, height: 2)
-//        view.layer.shadowRadius = 4
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -74,21 +67,13 @@ class TeamCell: UICollectionViewCell {
         ])
     }
     
-    // use this
+ 
     
     func configure(team: Team) {   
         teamNameLabel.text = team.teamName
-        teamLogo.kf.setImage(with: URL(string: team.teamLogo ?? "") , placeholder: UIImage(named: "f"))
-        // teamLogo.image = UIImage(named: team.logo)
+        teamLogo.kf.setImage(with: URL(string: team.teamLogo ?? "") , placeholder: UIImage(named: "football"))
   
     }
-    
-    // ay 7aga 3ashan agarb
-    
-//    func configure(with title: String) {
-//        teamLogo.image = UIImage(named: "ff")
-//        teamNameLabel.text = title
-//    
-//    }
+
 }
 
